@@ -45,3 +45,8 @@ Pushing a tag
 docker tag drupal:8-fpm-alpine drupalci:8-fpm-alpine
 docker push marcellovani/drupalci:8-fpm-alpine
 ```
+
+## Todos
+[ ] Add support for Drupal 7
+[ ] Support patches
+[ ] Expose screenshots of webtests

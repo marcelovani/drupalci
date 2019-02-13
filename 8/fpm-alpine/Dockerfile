@@ -15,4 +15,4 @@ EXPOSE 80
 
 COPY runtests.sh /var/www/html
 
-#RUN sh /var/www/html/runtests.sh 8 captcha_keypad
+#RUN sh /var/www/html/runtests.sh 8 captcha_keypad broken_test-dev https://github.com/marcelovani/captcha_keypad.git

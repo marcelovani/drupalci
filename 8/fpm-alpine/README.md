@@ -1,9 +1,9 @@
-#DrupalCi
+# DrupalCi
 
 Runs Drupal webtests and php unit tests using Docker containers.
 This can be used with Git webhooks but its not ready yet.
 
-##Usage examples
+## Usage examples
 The parameters for the runtests.sh script are:
 * Drupal version
 * Project name
@@ -31,7 +31,7 @@ docker run --name drupalci --rm marcellovani/drupalci:8-fpm-alpine /bin/sh -c "s
 ## Viewing tests results
 @Todo write the steps
 
-###This is standard Docker stuff
+### This is standard Docker stuff
 
 Building an image
 

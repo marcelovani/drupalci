@@ -48,5 +48,7 @@ docker push marcellovani/drupalci:8-fpm-alpine
 
 ## Todos
 [ ] Add support for Drupal 7
+
 [ ] Support patches
+
 [ ] Expose screenshots of webtests

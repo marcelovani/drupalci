@@ -11,6 +11,8 @@ RUN set -ex \
 	&& php core/scripts/drupal install minimal -vvv \
 	&& drush status
 
+EXPOSE 80
+
 COPY runtests.sh /var/www/html
 
-#RUN sh /var/www/html/runtests.sh 8 amp
+#RUN sh /var/www/html/runtests.sh 8 captcha_keypad

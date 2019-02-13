@@ -30,3 +30,18 @@ docker run --name drupalci --rm marcellovani/drupalci:8-fpm-alpine /bin/sh -c "s
 
 ## Viewing tests results
 @Todo write the steps
+
+###This is standard Docker stuff
+
+Building an image
+
+```
+docker build -t marcellovani/drupalci:8-fpm-alpine .
+```
+
+Pushing a tag
+
+```
+docker tag drupal:8-fpm-alpine drupalci:8-fpm-alpine
+docker push marcellovani/drupalci:8-fpm-alpine
+```

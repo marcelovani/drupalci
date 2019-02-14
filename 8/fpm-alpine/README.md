@@ -51,4 +51,6 @@ docker push marcellovani/drupalci:8-fpm-alpine
 
 [ ] Support patches
 
-[ ] Expose screenshots of webtests
+[ ] Expose screenshots of webtests or allow downloading
+
+[ ] Pass profile in the arguments or read from the tests

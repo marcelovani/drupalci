@@ -1,16 +1,16 @@
 #!/bin/sh
 set -x
 
-drupal_version=$1
+drupal_profile=$1
 require_module=$2
 module_version=$3
 vcs=$4
 
 cd /var/www/html
 
-if [[ -z "$drupal_version" ]]; then
+if [[ -z "$drupal_profile" ]]; then
    # this option could be deprecated
-   echo "You need to specify the Drupal version/branch i.e. ${0} 8"
+   echo "You need to specify the Drupal profile i.e. ${0} standard"
    exit 1
 fi
 
@@ -30,4 +30,5 @@ fi
 
 composer require drupal/${require_module}:${module_version}
 
+php core/scripts/drupal install ${drupal_profile}
 php core/scripts/run-tests.sh --php /usr/local/bin/php --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/contrib/${require_module}"

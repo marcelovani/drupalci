@@ -7,12 +7,8 @@ RUN set -ex \
 	&& cd /var/www/html \
 	&& rm composer.lock \
 	&& composer require drush/drush \
-	&& composer install \
-	&& php core/scripts/drupal install minimal -vvv \
-	&& drush status
-
-EXPOSE 80
+	&& composer install
 
 COPY runtests.sh /var/www/html
 
-#RUN sh /var/www/html/runtests.sh 8 captcha_keypad broken_test-dev https://github.com/marcelovani/captcha_keypad.git
+RUN sh /var/www/html/runtests.sh standard captcha_keypad broken_test-dev https://github.com/marcelovani/captcha_keypad.git

@@ -32,3 +32,4 @@ composer require drupal/${require_module}:${module_version}
 
 php core/scripts/drupal install ${drupal_profile}
 php core/scripts/run-tests.sh --php /usr/local/bin/php --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/contrib/${require_module}"
+ls sites/default/files/simpletest/verbose

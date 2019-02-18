@@ -1,34 +1,106 @@
-#!/bin/sh
-set -x
+#!/usr/local/bin/php
+<?php
 
-drupal_profile=$1
-require_module=$2
-module_version=$3
-vcs=$4
+/**
+ * @file
+ * This script runs Drupal tests from command line.
+ */
 
-cd /var/www/html
+// Set defaults and get overrides.
+list($args) = script_parse_args();
+//print_r ($args);
 
-if [[ -z "$drupal_profile" ]]; then
-   # this option could be deprecated
-   echo "You need to specify the Drupal profile i.e. ${0} standard"
-   exit 1
-fi
+// Validate project
+if (empty ($args['project'])) {
+  die("You need to specify the Drupal project i.e. --project drupal/captcha_keypad");
+}
 
-if [[ -z "$require_module" ]]; then
-   echo "You need to specify the Drupal module i.e. ${0} 8 boxout"
-   exit 1
-fi
+// Validate version
+if (empty ($args['version'])) {
+  die("You need to specify the project version or dev branch name i.e. --version 8.x-1.x-dev");
+}
 
-if [[ -z "$module_version" ]]; then
-   echo "You need to specify the module version/branch i.e. ${0} 8 boxout my_branch-dev"
-   exit 1
-fi
+// Prepend vendor if needed
+if (strpos($args['project'], '/') !== FALSE) {
+	$args['require_project'] = $args['project'];
+}
+else {
+	$args['require_project'] = 'drupal/' . $args['project'];
+}
 
-if [[ ! -z "$vcs" ]]; then
-   composer config repositories.${require_module} '{"type": "vcs", "no-api": true, "url": "'${vcs}'"}'
-fi
+// Prepare composer_commands
+$composer_commands = [];
+if (!empty ($args['vcs'])) {
+  $options = array(
+    'type' => 'vcs',
+    'url' => $args['vcs'],
+  );
 
-composer require drupal/${require_module}:${module_version}
+  if (strpos($args['vcs'], 'https') !== false) {
+    $options['no-api'] = true;
+  }
 
-php core/scripts/drupal install ${drupal_profile}
-php core/scripts/run-tests.sh --php /usr/local/bin/php --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/contrib/${require_module}"
+  $composer_commands[] = 'composer config repositories.' . $args['project'] . ' \'' . json_encode($options, JSON_UNESCAPED_SLASHES) . '\'';
+}
+$composer_commands[] = 'composer require ' . $args['require_project'] . ':' . $args['version'];
+
+// Prepare all commands.
+$commands = $composer_commands;
+$commands[] = 'php core/scripts/drupal install ' . $args['profile'];
+$commands[] = 'php core/scripts/run-tests.sh --php /usr/local/bin/php --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/contrib/' . $arg['project'] . '"';
+
+//print_r ($args);
+//print_r ($commands);
+
+// Run commands.
+foreach ($commands as $command) {
+	print_r(shell_exec ($command));
+}
+
+/**
+ * Parse execution argument and ensure that all are valid.
+ *
+ * @return array
+ *   The list of arguments.
+ */
+function script_parse_args() {
+  // Set default values.
+  $args = [
+    'script' => '',
+    'help' => FALSE,
+    'profile' => 'minimal',
+    'project' => '',
+	'version' => '',
+	'vcs' => '',
+  ];
+
+  // Override with set values.
+  $args['script'] = basename(array_shift($_SERVER['argv']));
+
+  while ($arg = array_shift($_SERVER['argv'])) {
+    if (preg_match('/--(\S+)/', $arg, $matches)) {
+      // Argument found.
+      if (array_key_exists($matches[1], $args)) {
+        // Argument found in list.
+        $previous_arg = $matches[1];
+        if (is_bool($args[$previous_arg])) {
+          $args[$matches[1]] = TRUE;
+        }
+        elseif (is_array($args[$previous_arg])) {
+          $value = array_shift($_SERVER['argv']);
+          $args[$matches[1]] = array_map('trim', explode(',', $value));
+        }
+        else {
+          $args[$matches[1]] = array_shift($_SERVER['argv']);
+        }
+      }
+      else {
+        // Argument not found in list.
+        echo ("Unknown argument '$arg'.");
+        exit(1);
+      }
+    }
+  }
+
+  return [$args];
+}

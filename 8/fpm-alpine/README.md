@@ -28,6 +28,14 @@ Run tests from the a forked branch of Captcha Keypad module
 docker run --name drupalci --rm marcellovani/drupalci:8-fpm-alpine /bin/sh -c "sh runtests.sh standard captcha_keypad broken_test-dev https://github.com/marcelovani/captcha_keypad.git"
 ```
 
+Keeping the results
+
+
+```bash
+docker run -v /tmp/drupalci/verbose:/var/www/html/sites/default/files/simpletest/verbose --name drupalci --rm marcellovani/drupalci:8-fpm-alpine /bin/sh -c "sh runtests.sh standard captcha_keypad broken_test-dev https://github.com/marcelovani/captcha_keypad.git"
+ls /tmp/drupalci/verbose
+```
+
 ## Viewing tests results
 @Todo write the steps
 

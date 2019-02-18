@@ -10,4 +10,3 @@ RUN set -ex \
 COPY runtests.sh /var/www/html
 
 #RUN sh /var/www/html/runtests.sh standard captcha_keypad broken_test-dev https://github.com/marcelovani/captcha_keypad.git
-RUN ls /var/www/html/results

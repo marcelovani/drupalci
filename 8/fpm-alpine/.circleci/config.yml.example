@@ -1,0 +1,13 @@
+# PHP CircleCI 2.0 configuration file
+version: 2
+jobs:
+  build:
+    machine:
+      docker_layer_caching: true
+    working_directory: /tmp/drupalci
+    steps:
+      - run:
+          name: Run tests
+          command: docker run -v /tmp/drupalci/verbose:/var/www/html/sites/default/files/simpletest/verbose marcellovani/drupalci:8-fpm-alpine /bin/sh -c "sh runtests.sh minimal ${CIRCLE_PROJECT_REPONAME} ${CIRCLE_BRANCH}-dev https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git"
+      - store_artifacts:
+          path: /tmp/drupalci/verbose

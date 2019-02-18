@@ -36,8 +36,17 @@ docker run -v /tmp/drupalci/verbose:/var/www/html/sites/default/files/simpletest
 ls /tmp/drupalci/verbose
 ```
 
-## Viewing tests results
-@Todo write the steps
+Viewing the results
+
+
+```bash
+ls /tmp/drupalci/verbose
+```
+
+### Using is on your Drupal module
+
+Copy the .circleci folder into your module, remame config.yml.example to config.yml and enable Circle CI for your project. When you make commits it will automatically trigger the build an you will be able to access the verbose results via Artifacts tab on Circle CI.
+
 
 ### This is standard Docker stuff
 
@@ -59,6 +68,6 @@ docker push marcellovani/drupalci:8-fpm-alpine
 
 [ ] Support patches
 
-[ ] Expose screenshots of webtests or allow downloading
+[x] Access to results of tests
 
 [x] Pass profile in the arguments or read from the tests

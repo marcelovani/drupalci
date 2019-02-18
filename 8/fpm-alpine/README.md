@@ -68,6 +68,8 @@ docker push marcellovani/drupalci:8-fpm-alpine
 
 [ ] Support patches
 
+[ ] PHP script needs to return code 1 when tests fail
+
 [x] Access to results of tests
 
 [x] Pass profile in the arguments or read from the tests

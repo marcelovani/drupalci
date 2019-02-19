@@ -47,7 +47,7 @@ $composer_commands[] = 'composer require ' . $args['require_project'] . ':' . $a
 // Prepare all commands.
 $commands = $composer_commands;
 $commands[] = 'php core/scripts/drupal install ' . $args['profile'];
-$commands[] = 'php core/scripts/run-tests.sh --php /usr/local/bin/php --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/contrib/' . $arg['project'] . '"';
+$commands[] = 'php core/scripts/run-tests.sh --php /usr/local/bin/php --keep-results --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/contrib/' . $arg['project'] . '"';
 
 //print_r ($args);
 //print_r ($commands);

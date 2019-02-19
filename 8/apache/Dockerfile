@@ -2,7 +2,8 @@ FROM drupal:8-apache
 
 RUN set -ex \
     && apt-get update \
-	&& apt-get install -y apt-utils \
+	&& apt-get install -y sudo \
+	                      apt-utils \
 	                      unzip \
 	                      git \
 	&& curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \

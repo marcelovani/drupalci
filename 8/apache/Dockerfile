@@ -13,4 +13,4 @@ RUN set -ex \
 COPY runtests.php /var/www/html
 
 #RUN /usr/local/bin/php /var/www/html/runtests.sh --profile standard --project captcha_keypad --version broken_test-dev --vcs https://github.com/marcelovani/captcha_keypad.git
-RUN /usr/local/bin/php /var/www/html/runtests.php --profile standard --project boxout --version 8.x-1.x-dev --vcs https://github.com/marcelovani/boxout.git
+#RUN /usr/local/bin/php /var/www/html/runtests.php --profile standard --project boxout --version 8.x-1.x-dev --vcs https://github.com/marcelovani/boxout.git

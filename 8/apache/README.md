@@ -44,6 +44,14 @@ Viewing the results
 ls /tmp/drupalci/verbose
 ```
 
+Keeping the machine on
+
+```bash
+docker run --name drupalci -p 8080:80 -d --rm marcellovani/drupalci:8-apache
+```
+
+Now browse at http://localhost:8080
+
 ### Using is on your Drupal module
 
 Copy the .circleci folder into your module, remame config.yml.example to config.yml and enable Circle CI for your project. When you make commits it will automatically trigger the build an you will be able to access the verbose results via Artifacts tab on Circle CI.
@@ -60,7 +68,7 @@ docker build -t marcellovani/drupalci:8-apache .
 Pushing a tag
 
 ```
-docker tag drupal:8-apache drupalci:8-apache
+docker tag drupal:8-apache marcellovani/drupalci:8-apache
 docker push marcellovani/drupalci:8-apache
 ```
 

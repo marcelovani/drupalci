@@ -5,10 +5,10 @@ This can be used with Git webhooks but its not ready yet.
 
 ## Usage examples
 The parameters for the runtests.sh script are:
-* Drupal profile
-* Project name
-* Project version
-* Fork url [optional]
+* --profile   Drupal install profile [optinoal, default = 'minimal']
+* --project   Project or module name
+* --version   Project version or branch name
+* --vcs       Fork url [optional]
 
 Run tests from the a released version of Captcha Keypad module
 
@@ -33,6 +33,7 @@ Keeping the results
 
 ```bash
 docker run -v /tmp/drupalci/verbose:/var/www/html/sites/default/files/simpletest/verbose --name drupalci --rm marcellovani/drupalci:8-fpm-alpine /bin/sh -c "php runtests.php --project captcha_keypad --branch 8.x-1.x-dev --vcs https://github.com/marcelovani/captcha_keypad.git"
+
 ls /tmp/drupalci/verbose
 ```
 

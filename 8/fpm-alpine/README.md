@@ -25,14 +25,14 @@ docker run --name drupalci --rm marcellovani/drupalci:8-fpm-alpine /bin/sh -c "p
 Run tests from the a forked branch of Captcha Keypad module
 
 ```bash
-docker run --name drupalci --rm marcellovani/drupalci:8-fpm-alpine /bin/sh -c "php runtests.sh --profile standard --project captcha_keypad --branch broken_test-dev --vcs https://github.com/marcelovani/captcha_keypad.git"
+docker run --name drupalci --rm marcellovani/drupalci:8-fpm-alpine /bin/sh -c "php runtests.sh --profile standard --project captcha_keypad --version broken_test-dev --vcs https://github.com/marcelovani/captcha_keypad.git"
 ```
 
 Keeping the results
 
 
 ```bash
-docker run -v /tmp/drupalci/verbose:/var/www/html/sites/default/files/simpletest/verbose --name drupalci --rm marcellovani/drupalci:8-fpm-alpine /bin/sh -c "php runtests.sh --project captcha_keypad --branch 8.x-1.x-dev --vcs https://github.com/marcelovani/captcha_keypad.git"
+docker run -v /tmp/drupalci/verbose:/var/www/html/sites/default/files/simpletest/verbose --name drupalci --rm marcellovani/drupalci:8-fpm-alpine /bin/sh -c "php runtests.sh --project captcha_keypad --version 8.x-1.x-dev --vcs https://github.com/marcelovani/captcha_keypad.git"
 ls /tmp/drupalci/verbose
 ```
 

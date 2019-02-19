@@ -1,4 +1,3 @@
-#!/usr/local/bin/php
 <?php
 
 /**
@@ -54,7 +53,10 @@ $commands[] = 'php core/scripts/run-tests.sh --php /usr/local/bin/php --keep-res
 
 // Run commands.
 foreach ($commands as $command) {
-	print_r(shell_exec ($command));
+  passthru($command, $err);
+  if ($err != 0) {
+    exit($err);
+  }
 }
 
 /**

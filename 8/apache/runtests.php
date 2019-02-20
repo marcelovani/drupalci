@@ -7,16 +7,10 @@
 
 // Set defaults and get overrides.
 list($args) = script_parse_args();
-//print_r ($args);
 
 // Validate project
 if (empty ($args['project'])) {
   die("You need to specify the Drupal project i.e. --project drupal/captcha_keypad");
-}
-
-// Validate version
-if (empty ($args['version'])) {
-  die("You need to specify the project version or dev branch name i.e. --version 8.x-1.x-dev");
 }
 
 // Prepend vendor if needed
@@ -29,6 +23,8 @@ else {
 
 // Prepare composer_commands
 $composer_commands = [];
+
+// Adds VCS
 if (!empty ($args['vcs'])) {
   $options = array(
     'type' => 'vcs',
@@ -41,15 +37,20 @@ if (!empty ($args['vcs'])) {
 
   $composer_commands[] = 'composer config repositories.' . $args['project'] . ' \'' . json_encode($options, JSON_UNESCAPED_SLASHES) . '\'';
 }
-$composer_commands[] = 'composer require ' . $args['require_project'] . ':' . $args['version'];
 
-// Prepare all commands.
+// Project version
+if (!empty ($args['version'])) {
+  $composer_commands[] = 'composer require ' . $args['require_project'] . ':' . $args['version'];
+}
+else  {
+  $composer_commands[] = 'composer require ' . $args['require_project'];
+}
+
+// Collect all commands.
 $commands = $composer_commands;
-$commands[] = 'php core/scripts/drupal install ' . $args['profile'];
-$commands[] = 'php core/scripts/run-tests.sh --php /usr/local/bin/php --keep-results --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/contrib/' . $arg['project'] . '"';
-
-//print_r ($args);
-//print_r ($commands);
+$commands[] = 'chmod -R 0777 sites/default';
+$commands[] = 'sudo -u www-data php core/scripts/drupal install ' . $args['profile'];
+$commands[] = 'sudo -u www-data php core/scripts/run-tests.sh --php /usr/local/bin/php --keep-results --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/contrib/' . $args['project'] . '"';
 
 // Run commands.
 foreach ($commands as $command) {
@@ -72,8 +73,8 @@ function script_parse_args() {
     'help' => FALSE,
     'profile' => 'minimal',
     'project' => '',
-	'version' => '',
-	'vcs' => '',
+	  'version' => '',
+	  'vcs' => '',
   ];
 
   // Override with set values.

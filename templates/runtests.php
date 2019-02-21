@@ -34,8 +34,8 @@ if (!empty ($args['vcs'])) {
   if (strpos($args['vcs'], 'https') !== false) {
     $options['no-api'] = true;
   }
-
-  $composer_commands[] = 'composer config repositories.' . $args['project'] . ' \'' . json_encode($options, JSON_UNESCAPED_SLASHES) . '\'';
+  $options = json_encode($options, JSON_UNESCAPED_SLASHES);
+  $composer_commands[] = 'composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
 }
 
 // Project version
@@ -48,21 +48,40 @@ else  {
 
 // Collect all commands.
 $commands = $composer_commands;
+// Change directory permissions.
 $commands[] = 'chmod -R 0777 sites/default';
+// Installs drupal.
 $commands[] = 'sudo -u www-data php core/scripts/drupal install ' . $args['profile'];
-$commands[] = 'sudo -u www-data php core/scripts/run-tests.sh --php /usr/local/bin/php --keep-results --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/contrib/' . $args['project'] . '"';
+// Run tests.
+$commands[] = 'sudo -u www-data php core/scripts/run-tests.sh ' .
+                   '--php /usr/local/bin/php ' .
+                   '--keep-results ' .
+                   '--color ' .
+                   '--concurrency "31" ' .
+                   '--sqlite sites/default/files/.ht.sqlite ' .
+                   '--verbose ' .
+                   '--directory "modules/contrib/' . $args['project'] . '"';
+// Keep results.
 $commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /results';
 
-// Run commands.
-$code = 0;
-foreach ($commands as $command) {
-  echo '>>>' . $command . PHP_EOL;
-  passthru($command, $err);
-  if ($err != 0) {
-    $code = 1;
+
+exit(run_commands($commands));
+
+/**
+ * Run commands
+ */
+function run_commands($commands) {
+  $code = 0;
+  foreach ($commands as $command) {
+    echo '[RUN] ' . $command . PHP_EOL;
+    passthru($command, $err);
+    if ($err != 0) {
+      $code = 1;
+    }
   }
+
+  return $code;
 }
-exit($code);
 
 /**
  * Parse execution argument and ensure that all are valid.

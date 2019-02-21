@@ -23,6 +23,14 @@ docker run --name drupalci --rm marcelovani/drupalci:8-apache \
        --version ^1.0.0
 ```
 
+Drupal 7
+
+```bash
+docker run --name drupalci --rm marcelovani/drupalci:7-apache \
+       --project captcha_keypad \
+       --version ^1.0.0
+```
+
 ### Forks and branches
 To run tests from the a forked branch you can use --version with the branch name plus -dev.
 You can also specify the repository using --vcs.

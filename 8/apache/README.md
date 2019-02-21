@@ -5,10 +5,10 @@ This can be used with Git webhooks but its not ready yet.
 
 ## Usage examples
 The parameters for the runtests.sh script are:
-* --profile   Drupal install profile [optinoal, default = 'minimal']
 * --project   Project or module name
-* --version   Project version or branch name
+* --version   Project version or branch name [optional]
 * --vcs       Fork url [optional]
+* --profile   Drupal install profile [optional]
 
 ### Usage
 Run tests from the a released version of Captcha Keypad module

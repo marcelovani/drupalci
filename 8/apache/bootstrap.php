@@ -1,4 +1,5 @@
 <?php
+require_once('runtests.php');
 
 /**
  * @file
@@ -47,44 +48,12 @@ else  {
 }
 
 // Collect all commands.
-$commands = $composer_commands;
-// Change directory permissions.
-$commands[] = 'chmod -R 0777 sites/default';
-
-// Installs drupal.
-if (getenv('DRUPAL_VERSION') == 7) {
-  $commands[] = 'drush si minimal --db-url=sqlite://sites/default/files/.ht.sqlite -y';
-  $commands[] = 'chown -R www-data:www-data sites/default';
-  $commands[] = 'drush en -y simpletest';
-  $commands[] = 'drush en -y ' . $args['project'];
-} else {
-  $commands[] = 'sudo -u www-data php core/scripts/drupal install ' . $args['profile'];
-}
-
-// Run tests.
-if (getenv('DRUPAL_VERSION') == 7) {
-  $commands[] = 'sudo -u www-data php /scripts/run-tests.sh ' .
-                   '--php /usr/local/bin/php ' .
-                   '--color ' .
-                   '--concurrency "31" ' .
-                   '--verbose ' .
-                   '--directory "modules/' . $args['project'] . '"';
-} else {
-  $commands[] = 'sudo -u www-data php core/scripts/run-tests.sh ' .
-                   '--php /usr/local/bin/php ' .
-                   '--keep-results ' .
-                   '--color ' .
-                   '--concurrency "31" ' .
-                   '--sqlite sites/default/files/.ht.sqlite ' .
-                   '--verbose ' .
-                   '--directory "modules/contrib/' . $args['project'] . '"';
-}
+$args['commands'] = $composer_commands;
+$code = run_tests($args);
 
 // Keep results.
 $commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /results';
-
-
-exit(run_commands($commands));
+exit($code);
 
 /**
  * Run commands
@@ -115,8 +84,8 @@ function script_parse_args() {
     'help' => FALSE,
     'profile' => 'minimal',
     'project' => '',
-	  'version' => '',
-	  'vcs' => '',
+    'version' => '',
+    'vcs' => '',
   ];
 
   // Override with set values.

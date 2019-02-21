@@ -1,8 +1,13 @@
 FROM drupal:8-apache
 
+ENV DRUPAL_VERSION 8
+
+COPY bootstrap.php .
 COPY runtests.php .
 COPY entrypoint.sh .
 COPY php-overrides.ini /usr/local/etc/php/conf.d
+
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 RUN set -ex \
     && apt-get update \
@@ -12,10 +17,12 @@ RUN set -ex \
         unzip \
         git
 
-RUN curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
+RUN mkdir /results
+
+RUN set -ex \
+    && curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
 	&& rm composer.lock \
-	&& composer install \
-	&& mkdir /verbose
+	&& composer install
 
 EXPOSE 80
 ENTRYPOINT ["./entrypoint.sh"]

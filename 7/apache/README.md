@@ -14,7 +14,7 @@ The parameters for the runtests.sh script are:
 Run tests from the a released version of Captcha Keypad module
 
 ```bash
-docker run --name drupalci --rm marcellovani/drupalci:8-apache \
+docker run --name drupalci --rm marcelovani/drupalci:8-apache \
        --project captcha_keypad \
        --version ^1.0.0
 ```
@@ -24,7 +24,7 @@ To run tests from the a forked branch you can use --version with the branch name
 You can also specify the repository using --vcs.
 
 ```bash
-docker run --name drupalci --rm marcellovani/drupalci:8-apache \
+docker run --name drupalci --rm marcelovani/drupalci:8-apache \
        --project captcha_keypad \
        --version 8.x-1.x-fork-dev \
        --vcs https://github.com/marcelovani/captcha_keypad.git
@@ -34,7 +34,7 @@ docker run --name drupalci --rm marcellovani/drupalci:8-apache \
 You can mount the verbose folder using -v, then you can see the generated output.
 
 ```bash
-docker run -v ~/Downloads/results:/results --name drupalci --rm marcellovani/drupalci:8-apache \
+docker run -v ~/Downloads/results:/results --name drupalci --rm marcelovani/drupalci:8-apache \
        --project captcha_keypad \
        --version 8.x-1.x-dev \
        --vcs https://github.com/marcelovani/captcha_keypad.git

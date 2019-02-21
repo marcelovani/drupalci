@@ -51,7 +51,7 @@ $commands = $composer_commands;
 $commands[] = 'chmod -R 0777 sites/default';
 $commands[] = 'sudo -u www-data php core/scripts/drupal install ' . $args['profile'];
 $commands[] = 'sudo -u www-data php core/scripts/run-tests.sh --php /usr/local/bin/php --keep-results --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/contrib/' . $args['project'] . '"';
-$commands[] = 'cp -a /var/www/html/sites/default/files/simpletest/verbose /';
+$commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /results';
 
 // Run commands.
 $code = 0;

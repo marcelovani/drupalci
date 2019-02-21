@@ -7,8 +7,10 @@
 #	entrypoint.sh: ['7/apache', '8/apache', ['8/fpm-alpine']],
 # }
 #
-#@todo add a comment on the top of generated files to say its been generated
-#
+
+cp README.md ./7/apache
+cp README.md ./8/apache
+cp README.md ./8/fpm-alpine
 
 cp templates/bootstrap.php ./7/apache
 cp templates/bootstrap.php ./8/apache

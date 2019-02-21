@@ -5,16 +5,16 @@ This can be used with Git webhooks but its not ready yet.
 
 ## Usage examples
 The parameters for the runtests.sh script are:
-* --profile   Drupal install profile [optinoal, default = 'minimal']
 * --project   Project or module name
-* --version   Project version or branch name
+* --version   Project version or branch name [optional]
 * --vcs       Fork url [optional]
+* --profile   Drupal install profile [optional]
 
 ### Usage
 Run tests from the a released version of Captcha Keypad module
 
 ```bash
-docker run --name drupalci --rm marcellovani/drupalci:8-fpm-alpine \
+docker run --name drupalci --rm marcellovani/drupalci:8-apache \
        --project captcha_keypad \
        --version ^1.0.0
 ```
@@ -24,7 +24,7 @@ To run tests from the a forked branch you can use --version with the branch name
 You can also specify the repository using --vcs.
 
 ```bash
-docker run --name drupalci --rm marcellovani/drupalci:8-fpm-alpine \
+docker run --name drupalci --rm marcellovani/drupalci:8-apache \
        --project captcha_keypad \
        --version 8.x-1.x-fork-dev \
        --vcs https://github.com/marcelovani/captcha_keypad.git
@@ -34,11 +34,10 @@ docker run --name drupalci --rm marcellovani/drupalci:8-fpm-alpine \
 You can mount the verbose folder using -v, then you can see the generated output.
 
 ```bash
-docker run --name drupalci --rm marcellovani/drupalci:8-fpm-alpine \
+docker run -v ~/Downloads/results:/results --name drupalci --rm marcellovani/drupalci:8-apache \
        --project captcha_keypad \
        --version 8.x-1.x-dev \
-       --vcs https://github.com/marcelovani/captcha_keypad.git \
-       -v ~/Downloads/verbose:/verbose
+       --vcs https://github.com/marcelovani/captcha_keypad.git
 
 ls ~/Downloads/verbose
 ```
@@ -50,21 +49,20 @@ Copy the .circleci folder into your module, remame config.yml.example to config.
 
 ### This is standard Docker stuff
 
-Building an image
+Building images
 
 ```
-docker build -t marcellovani/drupalci:8-fpm-alpine .
+./build_all.sh
 ```
 
-Pushing a tag
+Building and deploying
 
 ```
-docker tag drupal:8-fpm-alpine marcellovani/drupalci:8-fpm-alpine
-docker push marcellovani/drupalci:8-fpm-alpine
+./build_deploy_all.sh
 ```
 
 ## Todos
-[ ] Add support for Drupal 7
+[x] Add support for Drupal 7
 
 [ ] Support patches
 
@@ -73,3 +71,7 @@ docker push marcellovani/drupalci:8-fpm-alpine
 [x] Access to results of tests
 
 [x] Pass profile in the arguments or read from the tests
+
+[ ] Add a comment on the top of generated files to say its been generated
+
+[ ] Replace strings on the copied templates i.e. D8 becomes D7

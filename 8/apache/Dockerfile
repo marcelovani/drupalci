@@ -1,6 +1,7 @@
 FROM drupal:8-apache
 
-COPY runtests.php /var/www/html
+COPY runtests.php .
+COPY entrypoint.sh .
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 
 RUN set -ex \
@@ -11,10 +12,10 @@ RUN set -ex \
         unzip \
         git
 
-RUN sudo -u www-data echo 'Installing composer' \
-	&& curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
-	&& cd /var/www/html \
+RUN curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
 	&& rm composer.lock \
-	&& composer install
+	&& composer install \
+	&& mkdir /verbose
 
-RUN php runtests.php --profile standard --project captcha_keypad --version 8.x-1.x-dev --vcs https://github.com/marcelovani/captcha_keypad.git
+EXPOSE 80
+ENTRYPOINT ["./entrypoint.sh"]

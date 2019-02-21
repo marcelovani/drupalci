@@ -51,14 +51,18 @@ $commands = $composer_commands;
 $commands[] = 'chmod -R 0777 sites/default';
 $commands[] = 'sudo -u www-data php core/scripts/drupal install ' . $args['profile'];
 $commands[] = 'sudo -u www-data php core/scripts/run-tests.sh --php /usr/local/bin/php --keep-results --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/contrib/' . $args['project'] . '"';
+$commands[] = 'cp -a /var/www/html/sites/default/files/simpletest/verbose /';
 
 // Run commands.
+$code = 0;
 foreach ($commands as $command) {
+  echo '>>>' . $command . PHP_EOL;
   passthru($command, $err);
   if ($err != 0) {
-    exit($err);
+    $code = 1;
   }
 }
+exit($code);
 
 /**
  * Parse execution argument and ensure that all are valid.

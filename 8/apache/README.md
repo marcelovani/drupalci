@@ -10,49 +10,40 @@ The parameters for the runtests.sh script are:
 * --version   Project version or branch name
 * --vcs       Fork url [optional]
 
+### Usage
 Run tests from the a released version of Captcha Keypad module
 
 ```bash
-docker run --name drupalci --rm marcellovani/drupalci:8-apache /bin/sh -c "php runtests.php --project captcha_keypad --version 1.x"
+docker run --name drupalci --rm marcellovani/drupalci:8-apache \
+       --project captcha_keypad \
+       --version ^1.0.0
 ```
 
-Run tests from the main dev branch of Captcha Keypad module
+### Forks and branches
+To run tests from the a forked branch you can use --version with the branch name plus -dev.
+You can also specify the repository using --vcs.
 
 ```bash
-docker run --name drupalci --rm marcellovani/drupalci:8-apache /bin/sh -c "php runtests.php --project drupal/captcha_keypad --version 1.x-dev"
+docker run --name drupalci --rm marcellovani/drupalci:8-apache \
+       --project captcha_keypad \
+       --version 8.x-1.x-fork-dev \
+       --vcs https://github.com/marcelovani/captcha_keypad.git
 ```
 
-Run tests from the a forked branch of Captcha Keypad module
+### Checking the results
+You can mount the verbose folder using -v, then you can see the generated output.
 
 ```bash
-docker run --name drupalci --rm marcellovani/drupalci:8-apache /bin/sh -c "php runtests.php --profile standard --project captcha_keypad --version broken_test-dev --vcs https://github.com/marcelovani/captcha_keypad.git"
+docker run --name drupalci --rm marcellovani/drupalci:8-apache \
+       --project captcha_keypad \
+       --version 8.x-1.x-dev \
+       --vcs https://github.com/marcelovani/captcha_keypad.git \
+       -v ~/Downloads/verbose:/verbose
+
+ls ~/Downloads/verbose
 ```
 
-Keeping the results
-
-
-```bash
-docker run -v /tmp/drupalci/verbose:/var/www/html/sites/default/files/simpletest/verbose --name drupalci --rm marcellovani/drupalci:8-apache /bin/sh -c "php runtests.php --project captcha_keypad --branch 8.x-1.x-dev --vcs https://github.com/marcelovani/captcha_keypad.git"
-
-ls /tmp/drupalci/verbose
-```
-
-Viewing the results
-
-
-```bash
-ls /tmp/drupalci/verbose
-```
-
-Keeping the machine on
-
-```bash
-docker run --name drupalci -p 8080:80 -d --rm marcellovani/drupalci:8-apache
-```
-
-Now browse at http://localhost:8080
-
-### Using is on your Drupal module
+### Using is on your project
 
 Copy the .circleci folder into your module, remame config.yml.example to config.yml and enable Circle CI for your project. When you make commits it will automatically trigger the build an you will be able to access the verbose results via Artifacts tab on Circle CI.
 
@@ -77,7 +68,7 @@ docker push marcellovani/drupalci:8-apache
 
 [ ] Support patches
 
-[ ] PHP script needs to return code 1 when tests fail
+[x] PHP script needs to return code 1 when tests fail
 
 [x] Access to results of tests
 

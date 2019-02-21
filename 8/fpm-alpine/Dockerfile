@@ -1,13 +1,16 @@
 FROM drupal:8-fpm-alpine
 
+COPY runtests.php .
+COPY entrypoint.sh .
+COPY php-overrides.ini /usr/local/etc/php/conf.d
+
 RUN set -ex \
-	&& apk add sudo git \
-	&& curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
-	&& cd /var/www/html \
+    && apk add sudo git
+
+RUN curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
 	&& rm composer.lock \
-	&& composer install
+	&& composer install \
+	&& mkdir /verbose
 
-COPY runtests.php /var/www/html
-
-#RUN /usr/local/bin/php /var/www/html/runtests.sh --profile standard --project captcha_keypad --version broken_test-dev --vcs https://github.com/marcelovani/captcha_keypad.git
-RUN /usr/local/bin/php /var/www/html/runtests.php --profile standard --project boxout --version 8.x-1.x-dev --vcs https://github.com/marcelovani/boxout.git
+EXPOSE 80
+ENTRYPOINT ["./entrypoint.sh"]

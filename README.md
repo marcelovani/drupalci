@@ -1,5 +1,9 @@
 # DrupalCi
 
+[![Docker build auto](https://img.shields.io/docker/automated/marcellovani/drupalci.svg)](https://hub.docker.com/r/marcellovani/drupalci)
+[![Docker pulls](https://img.shields.io/docker/pulls/marcellovani/drupalci.svg)](https://hub.docker.com/r/marcellovani/drupalci)
+[![Docker build status](https://img.shields.io/docker/status/marcellovani/drupalci.svg)](https://hub.docker.com/r/marcellovani/drupalci) 
+
 Runs Drupal webtests and php unit tests using Docker containers.
 This can be used with Git webhooks but its not ready yet.
 

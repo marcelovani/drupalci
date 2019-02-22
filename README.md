@@ -98,7 +98,7 @@ Building and deploying
 ## Todos
 [x] Add support for Drupal 7
 
-[ ] Support patches
+[x] Support patches
 
 [x] PHP script needs to return code 1 when tests fail
 
@@ -109,3 +109,6 @@ Building and deploying
 [ ] Add a comment on the top of generated files to say its been generated
 
 [ ] Replace strings on the copied templates i.e. D8 becomes D7
+
+[ ] Rewrite the php scripts to use classes
+

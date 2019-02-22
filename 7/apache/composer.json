@@ -1,5 +1,5 @@
 {
-    "name": "drupal/core",
+    "name": "drupal/drupal",
     "description": "Used to build D7 sites with composer",
     "type": "drupal-core",
     "version": "7",
@@ -12,9 +12,11 @@
         }
     },
     "require": {
-        "composer/installers": "^1.6",
-        "cweagans/composer-patches": "^1.6"
+        "composer/installers": "^1.6"
     },
-    "enable-patching": true,
-    "patches": {}
+    "extra": {
+        "installer-paths": {
+            "modules/{$name}": ["drupal-module"]
+        }
+    }
 }

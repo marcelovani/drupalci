@@ -1,6 +1,6 @@
 <?php
 function run_tests($args) {
-  $commands = $args['commands'];
+  $commands = array();
   $commands[] = 'sudo -u www-data php core/scripts/drupal install ' . $args['profile'];
   $commands[] = 'sudo -u www-data php core/scripts/run-tests.sh ' .
                    '--php /usr/local/bin/php ' .

@@ -22,8 +22,7 @@ else {
 	$args['require_project'] = 'drupal/' . $args['project'];
 }
 
-// Prepare composer_commands
-$composer_commands = [];
+$commands = array();
 
 // Adds VCS
 if (!empty ($args['vcs'])) {
@@ -36,29 +35,70 @@ if (!empty ($args['vcs'])) {
     $options['no-api'] = true;
   }
   $options = json_encode($options, JSON_UNESCAPED_SLASHES);
-  $composer_commands[] = 'composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
+  $commands[] = 'composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
 }
 
 // Project version
 if (!empty ($args['version'])) {
-  $composer_commands[] = 'composer require ' . $args['require_project'] . ':' . $args['version'];
+  $commands[] = 'composer require ' . $args['require_project'] . ':' . $args['version'];
 }
 else  {
-  $composer_commands[] = 'composer require ' . $args['require_project'];
+  $commands[] = 'composer require ' . $args['require_project'];
+}
+run_commands($commands);
+
+// Also install the require-dev stuff from the project being tested
+// This is a workaround to the fact that Composer only reads `require-dev` from root composer.json.
+$json_files = exec('find ~/.composer -name *' . $args['project'] . '.json');
+if (!empty($json_files)) {
+  foreach (explode(PHP_EOL, $json_files) as $json_file) {
+    if (file_exists($json_file)) {
+      $json_file_contents = file_get_contents($json_file);
+      $config = json_decode($json_file_contents);
+      $project = 'drupal/' . $args['project'];
+      $version = $args['version'];
+      $tmp = $config->packages->{$project};
+      if (isset($tmp->{$version})) {
+        if (isset($tmp->{$version}->{'require-dev'})) {
+          $require_dev = $tmp->{$version}->{'require-dev'};
+          $packages = array(); 
+          foreach ($require_dev as $item => $ver) {
+            $packages[] = $item . ':*';
+          }
+          // Now install all dev dependencies.
+          $commands[] = 'echo Instaling require-dev packages of ' . $args['project'];
+          // @todo use `sudo -u www-data /usr/local/bin/composer`
+          $commands[] = 'composer require --no-interaction ' . implode(' ', $packages) . ' --prefer-stable --no-progress --no-suggest';
+          run_commands($commands);
+        }
+      }
+    }
+  } 
 }
 
-// Collect all commands.
-$args['commands'] = $composer_commands;
+// Apply patches.
+if (!empty($args['patches'])) {
+  $patches = explode(',', $args['patches']);
+  foreach ($patches as  $patch) {
+    $commands[] = 'curl -L -o modules/' . $args['project'] . '/'. basename($patch) . ' ' . trim($patch);
+    $commands[] = 'cd modules/' . $args['project'] . '; patch -p1 < ' . basename($patch);
+  }
+  run_commands($commands);
+}
+
+// Run tests.
 $code = run_tests($args);
 
 // Keep results.
 $commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /results';
+run_commands($commands);
+
 exit($code);
 
 /**
  * Run commands
  */
-function run_commands($commands) {
+function run_commands(&$commands) {
   $code = 0;
   foreach ($commands as $command) {
     echo '[RUN] ' . $command . PHP_EOL;
@@ -67,6 +107,7 @@ function run_commands($commands) {
       $code = 1;
     }
   }
+  $commands = array();
 
   return $code;
 }
@@ -86,6 +127,8 @@ function script_parse_args() {
     'project' => '',
     'version' => '',
     'vcs' => '',
+    'patch' =>  '',
+    'patches' =>  '',
   ];
 
   // Override with set values.

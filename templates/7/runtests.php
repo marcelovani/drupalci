@@ -1,6 +1,6 @@
 <?php
 function run_tests($args) {
-  $commands = $args['commands'];
+  $commands = array();
   $commands[] = 'drush si minimal --db-url=sqlite://sites/default/files/.ht.sqlite -y';
   $commands[] = 'chown -R www-data:www-data sites/default';
   $commands[] = 'drush en -y simpletest';

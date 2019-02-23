@@ -8,9 +8,9 @@ COPY entrypoint.sh .
 COPY composer.json .
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-
-RUN mkdir /results
+RUN chown -R www-data:www-data /var/www \
+    && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
+    && mkdir /results
 
 RUN set -ex \
     && apt-get update \
@@ -31,8 +31,8 @@ RUN set -ex \
     && chmod +x /usr/bin/drush
 
 RUN set -ex \
-    && curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
-    && composer install
+    && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/local/bin --filename=composer \
+    && sudo -u www-data composer install
 
 EXPOSE 80
 ENTRYPOINT ["./entrypoint.sh"]

@@ -2,19 +2,19 @@
 
 [![Docker build auto](https://img.shields.io/docker/automated/marcelovani/drupalci.svg)](https://hub.docker.com/r/marcelovani/drupalci)
 [![Docker pulls](https://img.shields.io/docker/pulls/marcelovani/drupalci.svg)](https://hub.docker.com/r/marcelovani/drupalci)
-[![Docker build status](https://img.shields.io/docker/status/marcelovani/drupalci.svg)](https://hub.docker.com/r/marcelovani/drupalci) 
 
 Runs Drupal webtests and php unit tests using Docker containers.
 This can be used with Git webhooks but its not ready yet.
 
 ## Usage examples
-The parameters for the runtests.sh script are:
-* --project   Project or module name
-* --version   Project version or branch name [optional]. 
-              The format is the same as used in [Composer](https://getcomposer.org/doc/04-schema.md#version)
-* --vcs       Fork url [optional]
-* --profile   Drupal install profile [optional]
-* --patches   Specifies a list of patches to be applied. [See example below](#Patches).
+The parameters for the runtests.php script are:
+* --project      Project or module name
+* --version      Project version or branch name [optional]. 
+                 The format is the same as used in [Composer](https://getcomposer.org/doc/04-schema.md#version)
+* --vcs          Fork url [optional]
+* --profile      Drupal install profile [optional]
+* --patches      Specifies a list of patches to be applied. [See example below](#Patches).
+* --dependencies List of test dependencies [optional] i.e. "drupal/link:* drupal/email:^1.0"
 
 ### Drupal 8
 Run tests from the a released version of Captcha Keypad module
@@ -62,6 +62,16 @@ docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --project captcha_keypad \
        --version dev-1.x \
        --patches "https://www.example.com/fix-1.patch, https://www.example.com/fix-2.patch"
+```
+
+### Dependencies
+Used to install test dependencies or any addicional package.
+
+```bash
+docker run --name drupalci --rm marcelovani/drupalci:7-apache \
+       --project amp \
+       --version dev-1.x \
+       --dependencies "drupal/media:* drupal/ctools:* drupal/token:* drupal/google_analytics:* drupal/dfp:* drupal/context:*"
 ```
 
 ### Checking the results

@@ -35,51 +35,29 @@ if (!empty ($args['vcs'])) {
     $options['no-api'] = true;
   }
   $options = json_encode($options, JSON_UNESCAPED_SLASHES);
-  $commands[] = 'composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
+  $commands[] = 'sudo -u www-data composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
 }
+
+// Composer require.
+$composer_require = [];
 
 // Project version
 if (!empty ($args['version'])) {
-  $commands[] = 'composer require ' . $args['require_project'] . ':' . $args['version'];
+  $composer_require[] = $args['require_project'] . ':' . $args['version'];
 }
 else  {
-  $commands[] = 'composer require ' . $args['require_project'];
+  $composer_require[] = $args['require_project'];
 }
-run_commands($commands);
 
-// Also install the require-dev stuff from the project being tested
-// This is a workaround to the fact that Composer only reads `require-dev` from root composer.json.
-// Also because if the module relies on the drupal logic to require dependencies via yaml file, see
-// https://www.drupal.org/docs/8/creating-custom-modules/let-drupal-8-know-about-your-module-with-an-infoyml-file
-$json_files = exec('find ~/.composer -name *' . $args['project'] . '.json');
-if (!empty($json_files)) {
-  foreach (explode(PHP_EOL, $json_files) as $json_file) {
-    if (file_exists($json_file)) {
-      $json_file_contents = file_get_contents($json_file);
-      $config = json_decode($json_file_contents);
-      $project = 'drupal/' . $args['project'];
-      $dev = 'dev-1.x';
-      if (isset($config->packages->{$project}->{$dev})) {
-        $list = array(); 
-        foreach (array('require', 'require-dev') as $r) {
-          if (isset($config->packages->{$project}->{$dev}->{$r})) {
-            $packages = $config->packages->{$project}->{$dev}->{$r};
-            foreach ($packages as $item => $ver) {
-              $list[] = $item . ':*';
-            }
-          }
-        }
-        if (!empty($list)) {
-          // Now install all dev dependencies.
-          $commands[] = 'echo Instaling required packages of ' . $args['project'];
-          // @todo use `sudo -u www-data /usr/local/bin/composer`
-          $commands[] = 'composer require --no-interaction ' . implode(' ', $list) . ' --prefer-stable --no-progress --no-suggest';
-        }
-      }
-    }
-  }
-  run_commands($commands);
+// Require dependencies
+if (!empty ($args['dependencies'])) {
+  $dependencies = str_replace(',', ' ', $args['dependencies']);
+  $dependencies = explode(' ', $dependencies);
+  $dependencies = array_filter($dependencies);
+  $composer_require = array_merge($composer_require, $dependencies);
 }
+$commands[] = 'sudo -u www-data composer require ' . implode(' ', $composer_require);
+run_commands($commands);
 
 // Apply patches.
 if (!empty($args['patches'])) {
@@ -88,7 +66,6 @@ if (!empty($args['patches'])) {
     $commands[] = 'curl -L -o modules/' . $args['project'] . '/'. basename($patch) . ' ' . trim($patch);
     $commands[] = 'cd modules/' . $args['project'] . '; patch -p1 < ' . basename($patch);
   }
-  run_commands($commands);
 }
 
 // Run tests.
@@ -132,8 +109,8 @@ function script_parse_args() {
     'project' => '',
     'version' => '',
     'vcs' => '',
-    'patch' =>  '',
     'patches' =>  '',
+    'dependencies' =>  '',
   ];
 
   // Override with set values.

@@ -7,7 +7,9 @@ COPY runtests.php .
 COPY entrypoint.sh .
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+RUN chown -R www-data:www-data /var/www \
+    && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
+    && mkdir /results
 
 RUN set -ex \
     && apt-get update \
@@ -16,8 +18,6 @@ RUN set -ex \
         apt-utils \
         unzip \
         git
-
-RUN mkdir /results
 
 RUN set -ex \
     && curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \

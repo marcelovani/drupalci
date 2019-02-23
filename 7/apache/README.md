@@ -78,7 +78,7 @@ ls ~/Downloads/verbose
 
 ### Using is on your project
 
-Copy the .circleci folder into your module, remame config.yml.example to config.yml and enable Circle CI for your project. When you make commits it will automatically trigger the build an you will be able to access the verbose results via Artifacts tab on Circle CI.
+Copy the [.circleci](https://github.com/marcelovani/drupalci/blob/master/8/apache/.circleci) folder into your module, remame config.yml.example to config.yml and enable Circle CI for your project. When you make commits it will automatically trigger the build an you will be able to access the verbose results via Artifacts tab on Circle CI.
 
 
 ### This is standard Docker stuff
@@ -98,7 +98,7 @@ Building and deploying
 ## Todos
 [x] Add support for Drupal 7
 
-[ ] Support patches
+[x] Support patches
 
 [x] PHP script needs to return code 1 when tests fail
 
@@ -109,3 +109,6 @@ Building and deploying
 [ ] Add a comment on the top of generated files to say its been generated
 
 [ ] Replace strings on the copied templates i.e. D8 becomes D7
+
+[ ] Rewrite the php scripts to use classes
+

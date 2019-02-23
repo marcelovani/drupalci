@@ -1,5 +1,5 @@
 {
-    "name": "drupal/drupal",
+    "name": "drupal/core",
     "description": "Used to build D7 sites with composer",
     "type": "drupal-core",
     "version": "7",

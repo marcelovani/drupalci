@@ -49,6 +49,8 @@ run_commands($commands);
 
 // Also install the require-dev stuff from the project being tested
 // This is a workaround to the fact that Composer only reads `require-dev` from root composer.json.
+// Also because if the module relies on the drupal logic to require dependencies via yaml file, see
+// https://www.drupal.org/docs/8/creating-custom-modules/let-drupal-8-know-about-your-module-with-an-infoyml-file
 $json_files = exec('find ~/.composer -name *' . $args['project'] . '.json');
 if (!empty($json_files)) {
   foreach (explode(PHP_EOL, $json_files) as $json_file) {
@@ -56,24 +58,27 @@ if (!empty($json_files)) {
       $json_file_contents = file_get_contents($json_file);
       $config = json_decode($json_file_contents);
       $project = 'drupal/' . $args['project'];
-      $version = $args['version'];
-      $tmp = $config->packages->{$project};
-      if (isset($tmp->{$version})) {
-        if (isset($tmp->{$version}->{'require-dev'})) {
-          $require_dev = $tmp->{$version}->{'require-dev'};
-          $packages = array(); 
-          foreach ($require_dev as $item => $ver) {
-            $packages[] = $item . ':*';
+      $dev = 'dev-1.x';
+      if (isset($config->packages->{$project}->{$dev})) {
+        $list = array(); 
+        foreach (array('require', 'require-dev') as $r) {
+          if (isset($config->packages->{$project}->{$dev}->{$r})) {
+            $packages = $config->packages->{$project}->{$dev}->{$r};
+            foreach ($packages as $item => $ver) {
+              $list[] = $item . ':*';
+            }
           }
+        }
+        if (!empty($list)) {
           // Now install all dev dependencies.
-          $commands[] = 'echo Instaling require-dev packages of ' . $args['project'];
+          $commands[] = 'echo Instaling required packages of ' . $args['project'];
           // @todo use `sudo -u www-data /usr/local/bin/composer`
-          $commands[] = 'composer require --no-interaction ' . implode(' ', $packages) . ' --prefer-stable --no-progress --no-suggest';
-          run_commands($commands);
+          $commands[] = 'composer require --no-interaction ' . implode(' ', $list) . ' --prefer-stable --no-progress --no-suggest';
         }
       }
     }
-  } 
+  }
+  run_commands($commands);
 }
 
 // Apply patches.

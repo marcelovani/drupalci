@@ -1,8 +1,7 @@
-FROM drupal:7-apache
+FROM marcelovani/drupalci:7-apache
 
 ENV DRUPAL_VERSION 7
 
-COPY runtests.php .
 COPY composer.json .
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 

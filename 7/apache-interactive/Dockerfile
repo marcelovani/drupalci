@@ -1,4 +1,4 @@
-FROM marcelovani/drupalci:7-apache
+FROM drupal:7-apache
 
 ENV DRUPAL_VERSION 7
 

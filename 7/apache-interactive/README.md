@@ -1,4 +1,4 @@
-# DrupalCi drupal:8-apache-interactive
+# DrupalCi drupal:7-apache-interactive
 
 This container will not run tests automatically.
 It is useful to perform manual tasks for the purpuses of debugging.

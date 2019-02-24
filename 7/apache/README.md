@@ -71,7 +71,13 @@ Used to install test dependencies or any addicional package.
 docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --project amp \
        --version dev-1.x \
-       --dependencies "drupal/media:* drupal/ctools:* drupal/token:* drupal/google_analytics:* drupal/dfp:* drupal/context:*"
+       --dependencies "drupal/media:* \
+                       drupal/ctools:* \
+                       drupal/token:* \
+                       drupal/google_analytics:* \
+                       drupal/dfp:* \
+                       drupal/context:* \
+                       drupal/adsense:*"
 ```
 
 ### Checking the results
@@ -79,9 +85,9 @@ You can mount the verbose folder using -v, then you can see the generated output
 
 ```bash
 docker run -v ~/Downloads/results:/results --name drupalci --rm marcelovani/drupalci:8-apache \
-       --project captcha_keypad \
-       --version dev-8.x-1.x \
-       --vcs https://github.com/marcelovani/captcha_keypad.git
+       --project sharerich \
+       --version dev-1.x \
+       --dependencies "drupal/token:*"
 
 ls ~/Downloads/verbose
 ```

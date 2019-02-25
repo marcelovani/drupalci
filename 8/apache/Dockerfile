@@ -20,9 +20,9 @@ RUN set -ex \
         git
 
 RUN set -ex \
-    && curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
+    && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
 	&& rm composer.lock \
-	&& composer install
+	&& sudo -u www-data composer install
 
 EXPOSE 80
 ENTRYPOINT ["./entrypoint.sh"]

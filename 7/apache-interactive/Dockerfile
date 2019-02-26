@@ -32,3 +32,4 @@ RUN set -ex \
     && sudo -u www-data composer install
 
 EXPOSE 80
+CMD ["apache2-foreground"]

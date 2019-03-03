@@ -14,3 +14,7 @@ cd ./7/apache-interactive \
 cd ./8/apache \
   && docker push marcelovani/drupalci:8-apache \
   && cd ../../
+
+cd ./8/apache-interactive \
+  && docker push marcelovani/drupalci:8-apache-interactive \
+  && cd ../../

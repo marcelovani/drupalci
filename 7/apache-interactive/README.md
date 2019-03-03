@@ -6,7 +6,7 @@ It is useful to perform manual tasks for the purpuses of debugging.
 To run it
 
 ```bash
-docker run --name --rm drupalci-interactive -p 8080:80 -d marcelovani/drupalci:7-apache-interactive
+docker run --rm --name drupalci8 -p 8080:80 -d marcelovani/drupalci:7-apache-interactive
 ```
 
 Then, access it via http://localhost:8080 or http://host-ip:8080 in a browser.
@@ -14,12 +14,11 @@ Then, access it via http://localhost:8080 or http://host-ip:8080 in a browser.
 To get into the container
 
 ```bash
-docker exec -it drupalci-interactive /bin/sh
+docker exec -it drupal7 /bin/sh
 ```
 
 or
 
 ```bash
-docker exec -it drupalci-interactive bash
+docker exec -it drupal7 bash
 ```
-

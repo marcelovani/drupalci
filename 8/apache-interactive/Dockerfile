@@ -2,9 +2,6 @@ FROM drupal:8-apache
 
 ENV DRUPAL_VERSION 8
 
-COPY bootstrap.php .
-COPY runtests.php .
-COPY entrypoint.sh .
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 
 RUN chown -R www-data:www-data /var/www \
@@ -25,4 +22,4 @@ RUN set -ex \
 	&& sudo -u www-data composer install
 
 EXPOSE 80
-ENTRYPOINT ["./entrypoint.sh"]
+CMD ["apache2-foreground"]

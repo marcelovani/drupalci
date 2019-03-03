@@ -14,11 +14,11 @@ Then, access it via http://localhost:8080 or http://host-ip:8080 in a browser.
 To get into the container
 
 ```bash
-docker exec -it drupalci-interactive /bin/sh
+docker exec -it drupal8 /bin/sh
 ```
 
 or
 
 ```bash
-docker exec -it drupalci-interactive bash
+docker exec -it drupal8 bash
 ```

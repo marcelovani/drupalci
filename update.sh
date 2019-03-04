@@ -3,29 +3,24 @@
 
 #@todo write a loop to parse an array of files to copy i.e.
 # {
-#	runtests.php: ['7/apache', '8/apache', ['8/fpm-alpine']],
-#	entrypoint.sh: ['7/apache', '8/apache', ['8/fpm-alpine']],
+#	runtests.php: ['7/apache', '8/apache'],
+#	entrypoint.sh: ['7/apache', '8/apache'],
 # }
 #
 
 cp README.md ./7/apache
 cp README.md ./8/apache
-cp README.md ./8/fpm-alpine
 
 cp templates/bootstrap.php ./7/apache
 cp templates/bootstrap.php ./8/apache
-cp templates/bootstrap.php ./8/fpm-alpine
 
 cp templates/entrypoint.sh ./7/apache
 cp templates/entrypoint.sh ./8/apache
-cp templates/entrypoint.sh ./8/fpm-alpine
 
 cp templates/php-overrides.ini ./7/apache
 cp templates/php-overrides.ini ./8/apache
-cp templates/php-overrides.ini ./8/fpm-alpine
 
 cp templates/7/runtests.php ./7/apache
 cp templates/8/runtests.php ./8/apache
-cp templates/8/runtests.php ./8/fpm-alpine
 
 git status

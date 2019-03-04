@@ -6,23 +6,23 @@ sh update.sh
 echo [RUN] Build drupalci:7-apache \
   && clear \
   && cd ./7/apache \
-  && docker build -t marcelovani/drupalci:7-apache . \
+  && docker build -t dennisinteractive/drupalci:7-apache . \
   && cd ../../
 
 echo [RUN] Build drupalci:7-apache-interactive \
   && clear \
   && cd ./7/apache-interactive \
-  && docker build -t marcelovani/drupalci:7-apache-interactive . \
+  && docker build -t dennisinteractive/drupalci:7-apache-interactive . \
   && cd ../../
 
 echo [RUN] Build drupalci:8-apache \
   && clear \
   && cd ./8/apache \
-  && docker build -t marcelovani/drupalci:8-apache . \
+  && docker build -t dennisinteractive/drupalci:8-apache . \
   && cd ../../
 
 echo [RUN] Build drupalci:8-apache-interactive \
   && clear \
   && cd ./8/apache-interactive \
-  && docker build -t marcelovani/drupalci:8-apache-interactive . \
+  && docker build -t dennisinteractive/drupalci:8-apache-interactive . \
   && cd ../../

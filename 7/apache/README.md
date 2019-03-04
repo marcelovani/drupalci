@@ -111,20 +111,3 @@ Building and deploying
 ./build_deploy_all.sh
 ```
 
-## Todos
-[x] Add support for Drupal 7
-
-[x] Support patches
-
-[x] PHP script needs to return code 1 when tests fail
-
-[x] Access to results of tests
-
-[x] Pass profile in the arguments or read from the tests
-
-[ ] Add a comment on the top of generated files to say its been generated
-
-[ ] Replace strings on the copied templates i.e. D8 becomes D7
-
-[ ] Rewrite the php scripts to use classes
-

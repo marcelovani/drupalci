@@ -4,17 +4,17 @@
 sh build_all.sh
 
 cd ./7/apache \
-  && docker push dennisinteractive/drupalci:7-apache \
+  && docker push dennisdigital/drupalci:7-apache \
   && cd ../../
 
 cd ./7/apache-interactive \
-  && docker push dennisinteractive/drupalci:7-apache-interactive \
+  && docker push dennisdigital/drupalci:7-apache-interactive \
   && cd ../../
 
 cd ./8/apache \
-  && docker push dennisinteractive/drupalci:8-apache \
+  && docker push dennisdigital/drupalci:8-apache \
   && cd ../../
 
 cd ./8/apache-interactive \
-  && docker push dennisinteractive/drupalci:8-apache-interactive \
+  && docker push dennisdigital/drupalci:8-apache-interactive \
   && cd ../../

@@ -14,7 +14,8 @@ RUN set -ex \
         sudo \
         apt-utils \
         unzip \
-        git
+        git \
+        sqlite3
 
 RUN set -ex \
     && curl -L -o /usr/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.4.2/drush.phar \

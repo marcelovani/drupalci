@@ -17,6 +17,12 @@ RUN set -ex \
         git
 
 RUN set -ex \
+    && curl -L -o /usr/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.4.2/drush.phar \
+    && chmod +x /usr/bin/drush \
+    && sudo curl -L -o /usr/local/bin/drupal https://drupalconsole.com/installer \
+    && sudo chmod +x /usr/local/bin/drupal
+
+RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
 	&& rm composer.lock \
 	&& sudo -u www-data composer install

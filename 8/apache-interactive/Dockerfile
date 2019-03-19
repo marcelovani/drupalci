@@ -1,5 +1,7 @@
 FROM drupal:8-apache
 
+LABEL com.circleci.preserve-entrypoint=true
+
 ENV DRUPAL_VERSION 8
 
 COPY php-overrides.ini /usr/local/etc/php/conf.d

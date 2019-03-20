@@ -9,7 +9,7 @@ COPY php-overrides.ini /usr/local/etc/php/conf.d
 
 RUN chown -R www-data:www-data /var/www \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
-    && mkdir /results
+    && mkdir /results \
     && mkdir /var/log/messages
 
 RUN set -ex \

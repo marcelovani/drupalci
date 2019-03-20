@@ -3,15 +3,14 @@ FROM drupal:8-apache
 LABEL com.circleci.preserve-entrypoint=true
 
 ENV DRUPAL_VERSION 8
-ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_LOG_DIR /var/log/messages
 
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 
 RUN chown -R www-data:www-data /var/www \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
-    && mkdir /results \
-    && rm /var/log/apache2/error.log \
-    && rm /var/log/apache2/access.log
+    && mkdir /results
+    && mkdir /var/log/messages
 
 RUN set -ex \
     && apt-get update \

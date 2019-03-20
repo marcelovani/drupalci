@@ -9,7 +9,9 @@ COPY php-overrides.ini /usr/local/etc/php/conf.d
 
 RUN chown -R www-data:www-data /var/www \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
-    && mkdir /results
+    && mkdir /results \
+    && touch /var/log/apache2/error.log \
+    && touch /var/log/apache2/access.log
 
 RUN set -ex \
     && apt-get update \

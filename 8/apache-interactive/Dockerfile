@@ -3,6 +3,7 @@ FROM drupal:8-apache
 LABEL com.circleci.preserve-entrypoint=true
 
 ENV DRUPAL_VERSION 8
+ENV APACHE_LOG_DIR /var/log/apache2
 
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 

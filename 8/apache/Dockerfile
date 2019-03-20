@@ -1,6 +1,7 @@
 FROM drupal:8-apache
 
 ENV DRUPAL_VERSION 8
+ENV APACHE_LOG_DIR /var/log/apache2
 
 COPY bootstrap.php .
 COPY runtests.php .

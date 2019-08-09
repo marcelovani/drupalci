@@ -1,7 +1,7 @@
 # DrupalCi
 
-[![Docker build auto](https://img.shields.io/docker/automated/dennisdigital/drupalci.svg)](https://hub.docker.com/r/dennisdigital/drupalci)
-[![Docker pulls](https://img.shields.io/docker/pulls/dennisdigital/drupalci.svg)](https://hub.docker.com/r/dennisdigital/drupalci)
+[![Docker build auto](https://img.shields.io/docker/automated/marcelovani/drupalci.svg)](https://hub.docker.com/r/marcelovani/drupalci)
+[![Docker pulls](https://img.shields.io/docker/pulls/marcelovani/drupalci.svg)](https://hub.docker.com/r/marcelovani/drupalci)
 
 Runs Drupal webtests and php unit tests using Docker containers.
 This can be used with Git webhooks but its not ready yet.
@@ -20,7 +20,7 @@ The parameters for the runtests.php script are:
 Run tests from the a released version of Captcha Keypad module
 
 ```bash
-docker run --name drupalci --rm dennisdigital/drupalci:8-apache \
+docker run --name drupalci --rm marcelovani/drupalci:8-apache \
        --project captcha_keypad \
        --version ^1.0.0
 ```
@@ -28,7 +28,7 @@ docker run --name drupalci --rm dennisdigital/drupalci:8-apache \
 ### Drupal 7
 
 ```bash
-docker run --name drupalci --rm dennisdigital/drupalci:7-apache \
+docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --project captcha_keypad \
        --version ^1.0.0
 ```
@@ -39,17 +39,17 @@ See [Non feature branches](https://getcomposer.org/doc/04-schema.md#non-feature-
 You can also specify the repository using --vcs.
 
 ```bash
-docker run --name drupalci --rm dennisdigital/drupalci:8-apache \
+docker run --name drupalci --rm marcelovani/drupalci:8-apache \
        --project captcha_keypad \
        --version dev-8.x-1.x \
-       --vcs https://github.com/dennisdigital/captcha_keypad.git
+       --vcs https://github.com/marcelovani/captcha_keypad.git
 ```
 
 ### Patches
 You can provide a list of patches to be applied to the project.
 
 ```bash
-docker run --name drupalci --rm dennisdigital/drupalci:7-apache \
+docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --project amp \
        --version dev-1.x \
        --patches https://www.drupal.org/files/issues/2019-02-11/amp-initial-page-load-3031306-18.patch
@@ -58,7 +58,7 @@ docker run --name drupalci --rm dennisdigital/drupalci:7-apache \
 For multiple patches, each Url needs to be separated by comma.
 
 ```bash
-docker run --name drupalci --rm dennisdigital/drupalci:7-apache \
+docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --project captcha_keypad \
        --version dev-1.x \
        --patches "https://www.example.com/fix-1.patch, https://www.example.com/fix-2.patch"
@@ -68,7 +68,7 @@ docker run --name drupalci --rm dennisdigital/drupalci:7-apache \
 Used to install test dependencies or any addicional package.
 
 ```bash
-docker run --name drupalci --rm dennisdigital/drupalci:7-apache \
+docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --project amp \
        --version dev-1.x \
        --dependencies "drupal/media:* \
@@ -84,7 +84,7 @@ docker run --name drupalci --rm dennisdigital/drupalci:7-apache \
 You can mount the verbose folder using -v, then you can see the generated output.
 
 ```bash
-docker run -v ~/Downloads/results:/results --name drupalci --rm dennisdigital/drupalci:8-apache \
+docker run -v ~/Downloads/results:/results --name drupalci --rm marcelovani/drupalci:8-apache \
        --project sharerich \
        --version dev-1.x \
        --dependencies "drupal/token:*"
@@ -94,7 +94,7 @@ ls ~/Downloads/verbose
 
 ### Using is on your project
 
-Copy the [.circleci](https://github.com/dennisdigital/drupalci/blob/master/8/apache/.circleci) folder into your module, remame config.yml.example to config.yml and enable Circle CI for your project. When you make commits it will automatically trigger the build an you will be able to access the verbose results via Artifacts tab on Circle CI.
+Copy the [.circleci](https://github.com/marcelovani/drupalci/blob/master/8/apache/.circleci) folder into your module, remame config.yml.example to config.yml and enable Circle CI for your project. When you make commits it will automatically trigger the build an you will be able to access the verbose results via Artifacts tab on Circle CI.
 
 
 ### This is standard Docker stuff

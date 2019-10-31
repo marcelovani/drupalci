@@ -26,6 +26,6 @@ cp templates/php-overrides.ini ./9/apache
 
 cp templates/7/runtests.php ./7/apache
 cp templates/8/runtests.php ./8/apache
-cp templates/8/runtests.php ./9/apache
+cp templates/9/runtests.php ./9/apache
 
 git status

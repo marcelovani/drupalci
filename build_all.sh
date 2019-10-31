@@ -3,38 +3,32 @@
 
 sh update.sh
 
-echo [RUN] Build drupalci:7-apache \
-  && clear \
+echo [INFO] Build drupalci:7-apache \
   && cd ./7/apache \
   && docker build -t marcelovani/drupalci:7-apache . \
   && cd ../../
 
-echo [RUN] Build drupalci:7-apache-interactive \
-  && clear \
+echo [INFO] Build drupalci:7-apache-interactive \
   && cd ./7/apache-interactive \
   && docker build -t marcelovani/drupalci:7-apache-interactive . \
   && cd ../../
 
-echo [RUN] Build drupalci:8-apache \
-  && clear \
+echo [INFO] Build drupalci:8-apache \
   && cd ./8/apache \
   && docker build -t marcelovani/drupalci:8-apache . \
   && cd ../../
 
-echo [RUN] Build drupalci:8-apache-interactive \
-  && clear \
+echo [INFO] Build drupalci:8-apache-interactive \
   && cd ./8/apache-interactive \
   && docker build -t marcelovani/drupalci:8-apache-interactive . \
   && cd ../../
 
-echo [RUN] Build drupalci:9-apache \
-  && clear \
+echo [INFO] Build drupalci:9-apache \
   && cd ./9/apache \
   && docker build -t marcelovani/drupalci:9-apache . \
   && cd ../../
 
-echo [RUN] Build drupalci:9-apache-interactive \
-  && clear \
-  && cd ./9/apache-interactive \
+echo [INFO] Build drupalci:9-apache-interactive \
+  && pwd && ls -al &&  cd ./9/apache-interactive \
   && docker build -t marcelovani/drupalci:9-apache-interactive . \
   && cd ../../

@@ -29,8 +29,10 @@ RUN set -ex \
 
 RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
-	&& rm composer.lock \
-	&& sudo -u www-data composer install
+	&& cd /var/www \
+	&& sudo -u www-data composer create-project -s dev drupal/recommended-project:^8 --update-with-dependencies drupal \
+	&& rm -rf html \
+	&& ln -s drupal/web html
 
 EXPOSE 80
 CMD ["apache2-foreground"]

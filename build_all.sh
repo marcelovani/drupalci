@@ -26,3 +26,15 @@ echo [RUN] Build drupalci:8-apache-interactive \
   && cd ./8/apache-interactive \
   && docker build -t marcelovani/drupalci:8-apache-interactive . \
   && cd ../../
+
+echo [RUN] Build drupalci:9-apache \
+  && clear \
+  && cd ./9/apache \
+  && docker build -t marcelovani/drupalci:9-apache . \
+  && cd ../../
+
+echo [RUN] Build drupalci:9-apache-interactive \
+  && clear \
+  && cd ./9/apache-interactive \
+  && docker build -t marcelovani/drupalci:9-apache-interactive . \
+  && cd ../../

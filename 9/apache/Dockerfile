@@ -8,6 +8,8 @@ COPY runtests.php .
 COPY entrypoint.sh .
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 
+RUN docker-php-ext-install bcmath
+
 RUN chown -R www-data:www-data /var/www \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
     && mkdir /results

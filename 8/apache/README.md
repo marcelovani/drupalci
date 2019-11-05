@@ -21,8 +21,8 @@ Run tests from the a released version of Captcha Keypad module
 
 ```bash
 docker run --name drupalci --rm marcelovani/drupalci:9-apache \
-       --project captcha_keypad \
-       --version ^1.0.0
+       --project pagerer \
+       --version ^2.0.0
 ```
 
 ### Drupal 8

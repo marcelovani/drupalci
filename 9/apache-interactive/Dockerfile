@@ -5,7 +5,7 @@ LABEL com.circleci.preserve-entrypoint=true
 ENV DRUPAL_VERSION 9
 ENV APACHE_LOG_DIR /var/log/messages
 
-RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install bcmath > /dev/null
 
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 

@@ -5,7 +5,7 @@ LABEL com.circleci.preserve-entrypoint=true
 ENV DRUPAL_VERSION 8
 ENV APACHE_LOG_DIR /var/log/messages
 
-RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install bcmath > /dev/null
 
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 
@@ -31,7 +31,7 @@ RUN set -ex \
 RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
     && rm composer.lock \
-    && sudo -u www-data composer install
+    && sudo -u www-data composer require drupal/core:^8
 
 EXPOSE 80
 CMD ["apache2-foreground"]

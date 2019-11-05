@@ -2,7 +2,7 @@ FROM drupal:7-apache
 
 ENV DRUPAL_VERSION 7
 
-RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install bcmath > /dev/null
 
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 COPY composer.json .

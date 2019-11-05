@@ -95,7 +95,7 @@ exit($code);
 function run_commands(&$commands) {
   $code = 0;
   foreach ($commands as $command) {
-    echo '[INFO] ' . $command . PHP_EOL;
+    echo "\e[0;1;33m$command \e[0m" . PHP_EOL;
     passthru($command, $err);
     if ($err != 0) {
       $code = 1;
@@ -147,7 +147,7 @@ function script_parse_args() {
       }
       else {
         // Argument not found in list.
-        echo ("Unknown argument '$arg'.");
+        echo "\e[0;0;31m[ERROR] Unknown argument $arg \e[0m" . PHP_EOL;
         exit(1);
       }
     }

@@ -42,6 +42,23 @@ docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --version ^1.0.0
 ```
 
+### Interactive mode
+
+Starting the server
+```bash
+docker run --rm --name drupal -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
+```
+
+Getting into the container
+```bash
+docker exec -it drupal bash
+```
+
+Opening in the browser
+```bash
+open http://localhost:8080
+```
+
 ### Forks and branches
 To run tests from the a forked branch you can use --version with the branch.
 See [Non feature branches](https://getcomposer.org/doc/04-schema.md#non-feature-branches).

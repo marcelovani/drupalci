@@ -2,8 +2,10 @@ FROM drupal:7-apache
 
 ENV DRUPAL_VERSION 7
 
-COPY composer.json .
+RUN docker-php-ext-install bcmath
+
 COPY php-overrides.ini /usr/local/etc/php/conf.d
+COPY composer.json .
 
 RUN chown -R www-data:www-data /var/www \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf \

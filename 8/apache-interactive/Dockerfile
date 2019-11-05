@@ -5,9 +5,9 @@ LABEL com.circleci.preserve-entrypoint=true
 ENV DRUPAL_VERSION 8
 ENV APACHE_LOG_DIR /var/log/messages
 
-COPY php-overrides.ini /usr/local/etc/php/conf.d
-
 RUN docker-php-ext-install bcmath
+
+COPY php-overrides.ini /usr/local/etc/php/conf.d
 
 RUN chown -R www-data:www-data /var/www \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
@@ -20,8 +20,7 @@ RUN set -ex \
         sudo \
         apt-utils \
         unzip \
-        git \
-        sqlite3
+        git
 
 RUN set -ex \
     && curl -L -o /usr/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.4.2/drush.phar \
@@ -31,10 +30,8 @@ RUN set -ex \
 
 RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
-	&& cd /var/www \
-	&& sudo -u www-data composer create-project -s dev drupal/recommended-project:^8 drupal \
-	&& rm -rf html \
-	&& ln -s drupal/web html
+    && rm composer.lock \
+    && sudo -u www-data composer install
 
 EXPOSE 80
 CMD ["apache2-foreground"]

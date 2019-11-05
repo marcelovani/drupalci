@@ -35,7 +35,13 @@ if (!empty ($args['vcs'])) {
     $options['no-api'] = true;
   }
   $options = json_encode($options, JSON_UNESCAPED_SLASHES);
-  $commands[] = 'sudo -u www-data composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
+
+  if (getenv('DRUPAL_VERSION') == '9') {
+    $commands[] = 'cd /var/www/drupal && sudo -u www-data composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
+  }
+  else {
+    $commands[] = 'cd /var/www/html && sudo -u www-data composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
+  }
 }
 
 // Composer require.
@@ -56,7 +62,13 @@ if (!empty ($args['dependencies'])) {
   $dependencies = array_filter($dependencies);
   $composer_require = array_merge($composer_require, $dependencies);
 }
-$commands[] = 'sudo -u www-data composer require ' . implode(' ', $composer_require);
+
+if (getenv('DRUPAL_VERSION') == '9') {
+  $commands[] = 'cd /var/www/drupal && sudo -u www-data composer require ' . implode(' ', $composer_require);
+}
+else {
+  $commands[] = 'cd /var/www/html && sudo -u www-data composer require ' . implode(' ', $composer_require);
+}
 run_commands($commands);
 
 // Apply patches.
@@ -83,7 +95,7 @@ exit($code);
 function run_commands(&$commands) {
   $code = 0;
   foreach ($commands as $command) {
-    echo '[RUN] ' . $command . PHP_EOL;
+    echo '[INFO] ' . $command . PHP_EOL;
     passthru($command, $err);
     if ($err != 0) {
       $code = 1;

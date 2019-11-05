@@ -115,7 +115,7 @@ docker run -v ~/Downloads/results:/results --name drupalci --rm marcelovani/drup
        --version dev-1.x \
        --dependencies "drupal/token:*"
 
-ls ~/Downloads/verbose
+ls ~/Downloads/results
 ```
 
 ### Using is on your project

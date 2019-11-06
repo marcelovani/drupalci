@@ -9,8 +9,7 @@ This can be used with Git webhooks but its not ready yet.
 ## Usage examples
 The parameters for the runtests.php script are:
 * --project      Project or module name
-* --version      Project version or branch name [optional]. 
-                 The format is the same as used in [Composer](https://getcomposer.org/doc/04-schema.md#version)
+* --version      Project version or branch name [optional]. The format is the same as used in [Composer](https://getcomposer.org/doc/04-schema.md#version)
 * --vcs          Fork url [optional]
 * --profile      Drupal install profile [optional]
 * --patches      Specifies a list of patches to be applied. [See example below](#Patches).

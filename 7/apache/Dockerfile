@@ -31,6 +31,7 @@ RUN set -ex \
 
 RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/local/bin --filename=composer \
+    && composer global require hirak/prestissimo:^0.3 \
     && sudo -u www-data composer install
 
 COPY bootstrap.php .

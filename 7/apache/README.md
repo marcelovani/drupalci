@@ -43,6 +43,8 @@ docker run --name drupalci --rm marcelovani/drupalci:7-apache \
 ```
 
 ### Interactive mode
+The container will not run tests automatically.
+It is useful to perform manual tasks for the purposes of debugging.
 
 Starting the server
 ```bash

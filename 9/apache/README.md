@@ -46,12 +46,12 @@ docker run --name drupalci --rm marcelovani/drupalci:7-apache \
 
 Starting the server
 ```bash
-docker run --rm --name drupal -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
+docker run --rm --name drupalci -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
 ```
 
 Getting into the container
 ```bash
-docker exec -it drupal bash
+docker exec -it drupalci bash
 ```
 
 Opening in the browser
@@ -91,7 +91,7 @@ docker run --name drupalci --rm marcelovani/drupalci:7-apache \
 ```
 
 ### Dependencies
-Used to install test dependencies or any addicional package.
+Used to install test dependencies or any additional package.
 
 ```bash
 docker run --name drupalci --rm marcelovani/drupalci:7-apache \

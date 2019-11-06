@@ -23,6 +23,7 @@ else {
 }
 
 $commands = array();
+$commands[] = 'composer global require hirak/prestissimo:^0.3';
 
 // Adds VCS
 if (!empty ($args['vcs'])) {

@@ -3,9 +3,8 @@ FROM drupal:8-apache
 ENV DRUPAL_VERSION 8
 ENV APACHE_LOG_DIR /var/log/apache2
 
-COPY bootstrap.php .
-COPY runtests.php .
-COPY entrypoint.sh .
+RUN docker-php-ext-install bcmath > /dev/null
+
 COPY php-overrides.ini /usr/local/etc/php/conf.d
 
 RUN chown -R www-data:www-data /var/www \
@@ -18,12 +17,18 @@ RUN set -ex \
         sudo \
         apt-utils \
         unzip \
-        git
+        git \
+        sqlite3
 
 RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
-	&& rm composer.lock \
-	&& sudo -u www-data composer install
+    && composer global require hirak/prestissimo:^0.3 \
+    && rm composer.lock \
+    && sudo -u www-data composer require drupal/core:^8
+
+COPY bootstrap.php .
+COPY runtests.php .
+COPY entrypoint.sh .
 
 EXPOSE 80
 ENTRYPOINT ["./entrypoint.sh"]

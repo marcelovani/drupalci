@@ -2,8 +2,10 @@ FROM drupal:7-apache
 
 ENV DRUPAL_VERSION 7
 
-COPY composer.json .
+RUN docker-php-ext-install bcmath > /dev/null
+
 COPY php-overrides.ini /usr/local/etc/php/conf.d
+COPY composer.json .
 
 RUN chown -R www-data:www-data /var/www \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
@@ -29,6 +31,7 @@ RUN set -ex \
 
 RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/local/bin --filename=composer \
+    && composer global require hirak/prestissimo:^0.3 \
     && sudo -u www-data composer install
 
 EXPOSE 80

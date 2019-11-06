@@ -10,8 +10,6 @@ function run_tests($args) {
                    '--sqlite sites/default/files/.ht.sqlite ' .
                    '--verbose ' .
                    '--directory "modules/contrib/' . $args['project'] . '"';
-  // Keep results.
-  $commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /results';
 
   return run_commands($commands);
 }

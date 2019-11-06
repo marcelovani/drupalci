@@ -9,12 +9,20 @@ This can be used with Git webhooks but its not ready yet.
 ## Usage examples
 The parameters for the runtests.php script are:
 * --project      Project or module name
-* --version      Project version or branch name [optional]. 
-                 The format is the same as used in [Composer](https://getcomposer.org/doc/04-schema.md#version)
+* --version      Project version or branch name [optional]. The format is the same as used in [Composer](https://getcomposer.org/doc/04-schema.md#version)
 * --vcs          Fork url [optional]
 * --profile      Drupal install profile [optional]
 * --patches      Specifies a list of patches to be applied. [See example below](#Patches).
 * --dependencies List of test dependencies [optional] i.e. "drupal/link:* drupal/email:^1.0"
+
+### Drupal 9
+Run tests from the a released version of Captcha Keypad module
+
+```bash
+docker run --name drupalci --rm marcelovani/drupalci:9-apache \
+       --project pagerer \
+       --version ^2.0.0
+```
 
 ### Drupal 8
 Run tests from the a released version of Captcha Keypad module
@@ -31,6 +39,25 @@ docker run --name drupalci --rm marcelovani/drupalci:8-apache \
 docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --project captcha_keypad \
        --version ^1.0.0
+```
+
+### Interactive mode
+The container will not run tests automatically.
+It is useful to perform manual tasks for the purposes of debugging.
+
+Starting the server
+```bash
+docker run --rm --name drupalci -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
+```
+
+Getting into the container
+```bash
+docker exec -it drupalci bash
+```
+
+Opening in the browser
+```bash
+open http://localhost:8080
 ```
 
 ### Forks and branches
@@ -65,7 +92,7 @@ docker run --name drupalci --rm marcelovani/drupalci:7-apache \
 ```
 
 ### Dependencies
-Used to install test dependencies or any addicional package.
+Used to install test dependencies or any additional package.
 
 ```bash
 docker run --name drupalci --rm marcelovani/drupalci:7-apache \
@@ -89,7 +116,7 @@ docker run -v ~/Downloads/results:/results --name drupalci --rm marcelovani/drup
        --version dev-1.x \
        --dependencies "drupal/token:*"
 
-ls ~/Downloads/verbose
+ls ~/Downloads/results
 ```
 
 ### Using is on your project

@@ -11,8 +11,6 @@ function run_tests($args) {
                  '--concurrency "31" ' .
                  '--verbose ' .
                  '--directory "modules/' . $args['project'] . '"';
-  // Keep results.
-  $commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /results';
 
   return run_commands($commands);
 }

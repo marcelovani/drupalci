@@ -17,7 +17,8 @@ RUN set -ex \
         sudo \
         apt-utils \
         unzip \
-        git
+        git \
+        sqlite3
 
 RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \

@@ -50,9 +50,19 @@ Starting the server
 docker run --rm --name drupalci -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
 ```
 
+Using a mounted folder for a custom module
+```bash
+docker run --rm --name drupalci -v ~modules/project_name:/var/www/html/modules/project_name -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
+``` 
+
 Getting into the container
 ```bash
 docker exec -it drupalci bash
+```
+
+Running tests manually
+```
+sudo -u www-data php core/scripts/run-tests.sh --php /usr/local/bin/php --keep-results --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/project_name"
 ```
 
 Opening in the browser

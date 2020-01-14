@@ -15,3 +15,6 @@ jobs:
 
       - store_artifacts:
           path: /tmp/drupalci/results
+
+      - store_artifacts:
+          path: /var/www/html/composer.json

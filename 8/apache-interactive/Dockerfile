@@ -33,7 +33,7 @@ RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
     && composer global require hirak/prestissimo:^0.3 \
     && rm composer.lock \
-    && sudo -u www-data composer require drupal/core:^8
+    && sudo -u www-data composer require drupal/core:^8 --dev
 
 EXPOSE 80
 CMD ["apache2-foreground"]

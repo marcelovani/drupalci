@@ -33,7 +33,7 @@ RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer \
     && composer global require hirak/prestissimo:^0.3 \
 	&& cd /var/www && sudo -u www-data composer create-project -s dev drupal/recommended-project:^8 --no-interaction --no-install drupal \
-	&& cd drupal   && sudo -u www-data composer require drupal/core-recommended:9.0.x-dev drupal/core-dev:9.0.x-dev --update-with-dependencies \
+	&& cd drupal   && sudo -u www-data composer require drupal/core-recommended:9.0.x-dev drupal/core-dev:9.0.x-dev --dev --update-with-dependencies \
 	&& cd /var/www && rm -rf html && sudo -u www-data ln -s drupal/web html
 
 EXPOSE 80

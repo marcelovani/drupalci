@@ -84,7 +84,8 @@ if (!empty($args['patches'])) {
 $code = run_tests($args);
 
 // Keep results.
-$commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /results';
+$commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /artifacts';
+$commands[] = 'cp -a /var/www/html/composer.json /artifacts';
 run_commands($commands);
 
 exit($code);

@@ -50,9 +50,19 @@ Starting the server
 docker run --rm --name drupalci -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
 ```
 
+Using a mounted folder for a custom module
+```bash
+docker run --rm --name drupalci -v ~modules/project_name:/var/www/html/modules/project_name -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
+``` 
+
 Getting into the container
 ```bash
 docker exec -it drupalci bash
+```
+
+Running tests manually
+```
+sudo -u www-data php core/scripts/run-tests.sh --php /usr/local/bin/php --keep-results --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/project_name"
 ```
 
 Opening in the browser
@@ -111,12 +121,12 @@ docker run --name drupalci --rm marcelovani/drupalci:7-apache \
 You can mount the verbose folder using -v, then you can see the generated output.
 
 ```bash
-docker run -v ~/Downloads/results:/results --name drupalci --rm marcelovani/drupalci:8-apache \
+docker run -v ~/Downloads/artifacts:/artifacts --name drupalci --rm marcelovani/drupalci:8-apache \
        --project sharerich \
        --version dev-1.x \
        --dependencies "drupal/token:*"
 
-ls ~/Downloads/results
+ls ~/Downloads/artifacts
 ```
 
 ### Using is on your project

@@ -121,12 +121,12 @@ docker run --name drupalci --rm marcelovani/drupalci:7-apache \
 You can mount the verbose folder using -v, then you can see the generated output.
 
 ```bash
-docker run -v ~/Downloads/results:/results --name drupalci --rm marcelovani/drupalci:8-apache \
+docker run -v ~/Downloads/artifacts:/artifacts --name drupalci --rm marcelovani/drupalci:8-apache \
        --project sharerich \
        --version dev-1.x \
        --dependencies "drupal/token:*"
 
-ls ~/Downloads/results
+ls ~/Downloads/artifacts
 ```
 
 ### Using is on your project

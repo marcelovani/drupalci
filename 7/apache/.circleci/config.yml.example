@@ -8,13 +8,10 @@ jobs:
     steps:
       - run:
           name: Run tests
-          command: docker run -v /tmp/drupalci/results:/results --name drupalci --rm marcelovani/drupalci:7-apache \
+          command: docker run -v /tmp/drupalci/artifacts:/artifacts --name drupalci --rm marcelovani/drupalci:7-apache \
                           --project ${CIRCLE_PROJECT_REPONAME} \
                           --version dev-${CIRCLE_BRANCH} \
                           --vcs https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git \
 
       - store_artifacts:
-          path: /tmp/drupalci/results
-
-      - store_artifacts:
-          path: /var/www/html/composer.json
+          path: /tmp/drupalci/artifacts

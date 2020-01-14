@@ -9,7 +9,7 @@ COPY composer.json .
 
 RUN chown -R www-data:www-data /var/www \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
-    && mkdir /results
+    && mkdir /artifacts
 
 RUN set -ex \
     && apt-get update \

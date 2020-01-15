@@ -20,9 +20,10 @@ Run tests from the a released version of Captcha Keypad module
 
 ```bash
 docker run --name drupalci --rm marcelovani/drupalci:9-apache \
-       --project pagerer \
+       --project adstxt \
        --version ^2.0.0
 ```
+ps: Drupal 9 is not working yet
 
 ### Drupal 8
 Run tests from the a released version of Captcha Keypad module

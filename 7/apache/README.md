@@ -16,13 +16,14 @@ The parameters for the runtests.php script are:
 * --dependencies List of test dependencies [optional] i.e. "drupal/link:* drupal/email:^1.0"
 
 ### Drupal 9
-Run tests from the a released version of Captcha Keypad module
+Run tests from the a released version of AdsTxt module
 
 ```bash
 docker run --name drupalci --rm marcelovani/drupalci:9-apache \
-       --project pagerer \
-       --version ^2.0.0
+       --project adstxt \
+       --version ^1.0.0
 ```
+ps: Drupal 9 is not working yet
 
 ### Drupal 8
 Run tests from the a released version of Captcha Keypad module

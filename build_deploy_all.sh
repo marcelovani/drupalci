@@ -1,8 +1,12 @@
 #!/bin/sh
 # Copies all templates and builds the tags
+# In order to push you need to run docker login first
+# i.e. docker login -u "myusername" -p "mypassword" docker.io
 
+echo [INFO] Running builds
 sh build_all.sh
 
+echo [INFO] Deploying
 cd ./7/apache \
   && docker push marcelovani/drupalci:7-apache \
   && cd ../../

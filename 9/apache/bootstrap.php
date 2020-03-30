@@ -45,7 +45,7 @@ if (!empty ($args['vcs'])) {
 }
 
 // Composer require.
-$composer_require = [];
+$composer_require = ['phpunit/phpunit'];
 
 // Project version
 if (!empty ($args['version'])) {

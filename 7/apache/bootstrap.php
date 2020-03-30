@@ -45,7 +45,7 @@ if (!empty ($args['vcs'])) {
 }
 
 // Composer require.
-$composer_require = ['phpunit/phpunit'];
+$composer_require = [];
 
 // Project version
 if (!empty ($args['version'])) {
@@ -64,6 +64,7 @@ if (!empty ($args['dependencies'])) {
 }
 
 if (getenv('DRUPAL_VERSION') == '9') {
+  $composer_require[] = 'phpunit/phpunit';
   $commands[] = 'cd /var/www/drupal && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require);
 }
 else {
@@ -84,8 +85,14 @@ if (!empty($args['patches'])) {
 $code = run_tests($args);
 
 // Keep results.
-$commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /artifacts';
-$commands[] = 'cp -a /var/www/html/composer.json /artifacts';
+if (getenv('DRUPAL_VERSION') == '9') {
+  $commands[] = 'cp -a /var/www/drupal/sites/default/files/simpletest /artifacts';
+  $commands[] = 'cp -a /var/www/drupal/composer.json /artifacts';
+}
+else {
+  $commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /artifacts';
+  $commands[] = 'cp -a /var/www/html/composer.json /artifacts';
+}
 run_commands($commands);
 
 exit($code);

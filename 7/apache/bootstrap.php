@@ -64,10 +64,10 @@ if (!empty ($args['dependencies'])) {
 }
 
 if (getenv('DRUPAL_VERSION') == '9') {
-  $commands[] = 'cd /var/www/drupal && sudo -u www-data composer require ' . implode(' ', $composer_require);
+  $commands[] = 'cd /var/www/drupal && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require);
 }
 else {
-  $commands[] = 'cd /var/www/html && sudo -u www-data composer require ' . implode(' ', $composer_require);
+  $commands[] = 'cd /var/www/html && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require);
 }
 run_commands($commands);
 

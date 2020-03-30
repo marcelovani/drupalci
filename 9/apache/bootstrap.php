@@ -86,7 +86,7 @@ $code = run_tests($args);
 
 // Keep results.
 if (getenv('DRUPAL_VERSION') == '9') {
-  $commands[] = 'cp -a /var/www/drupal/sites/default/files/simpletest /artifacts';
+  $commands[] = 'cp -a /var/www/drupal/web/sites/default/files/simpletest /artifacts';
   $commands[] = 'cp -a /var/www/drupal/composer.json /artifacts';
 }
 else {

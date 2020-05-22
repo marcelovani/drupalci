@@ -36,12 +36,7 @@ if (!empty ($args['vcs'])) {
   }
   $options = json_encode($options, JSON_UNESCAPED_SLASHES);
 
-  if (getenv('DRUPAL_VERSION') == '9') {
-    $commands[] = 'cd /var/www/drupal && sudo -u www-data composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
-  }
-  else {
-    $commands[] = 'cd /var/www/html && sudo -u www-data composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
-  }
+  $commands[] = 'cd /var/www/html && sudo -u www-data composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
 }
 
 // Composer require.
@@ -63,13 +58,13 @@ if (!empty ($args['dependencies'])) {
   $composer_require = array_merge($composer_require, $dependencies);
 }
 
-if (getenv('DRUPAL_VERSION') == '9') {
-  $composer_require[] = 'phpunit/phpunit';
-  $commands[] = 'cd /var/www/drupal && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require);
-}
-else {
+//if (getenv('DRUPAL_VERSION') == '9') {
+//  $composer_require[] = 'phpunit/phpunit';
+//  $commands[] = 'cd /var/www/drupal && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require);
+//}
+//else {
   $commands[] = 'cd /var/www/html && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require);
-}
+//}
 run_commands($commands);
 
 // Apply patches.
@@ -85,14 +80,14 @@ if (!empty($args['patches'])) {
 $code = run_tests($args);
 
 // Keep results.
-if (getenv('DRUPAL_VERSION') == '9') {
-  $commands[] = 'cp -a /var/www/drupal/web/sites/default/files/simpletest /artifacts';
-  $commands[] = 'cp -a /var/www/drupal/composer.json /artifacts';
+if (getenv('DRUPAL_VERSION') == '7') {
+  $commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /artifacts';
 }
 else {
-  $commands[] = 'cp -a /var/www/html/sites/default/files/simpletest /artifacts';
-  $commands[] = 'cp -a /var/www/html/composer.json /artifacts';
+  $commands[] = 'cp -a /var/www/html/web/sites/default/files/simpletest /artifacts';
 }
+$commands[] = 'cp -a /var/www/html/composer.json /artifacts';
+
 run_commands($commands);
 
 exit($code);

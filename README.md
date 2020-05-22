@@ -23,7 +23,6 @@ docker run --name drupalci --rm marcelovani/drupalci:9-apache \
        --project adstxt \
        --version ^1.0.0
 ```
-ps: Drupal 9 is not working yet
 
 ### Drupal 8
 Run tests from the a released version of Captcha Keypad module

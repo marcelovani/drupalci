@@ -6,7 +6,10 @@ function run_tests($args) {
     '--php /usr/local/bin/php ' .
     '--keep-results ' .
     '--color ' .
-    '--concurrency "31" ' .
+    '--suppress-deprecations ' .
+    '--types "Simpletest,PHPUnit-Unit,PHPUnit-Kernel,PHPUnit-Functional" ' .
+    '--concurrency "32" ' .
+    '--repeat "1" ' .
     '--sqlite sites/default/files/.ht.sqlite ' .
     '--verbose ' .
     '--directory "modules/contrib/' . $args['project'] . '"';

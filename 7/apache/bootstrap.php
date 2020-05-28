@@ -58,13 +58,9 @@ if (!empty ($args['dependencies'])) {
   $composer_require = array_merge($composer_require, $dependencies);
 }
 
-//if (getenv('DRUPAL_VERSION') == '9') {
-//  $composer_require[] = 'phpunit/phpunit';
-//  $commands[] = 'cd /var/www/drupal && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require);
-//}
-//else {
-  $commands[] = 'cd /var/www/html && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require);
-//}
+$options = ' --prefer-source --prefer-stable --no-progress --no-suggest --no-interaction';
+$commands[] = 'cd /var/www/html && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require) . $options;
+$commands[] = 'cd /var/www/html && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer --no-progress --no-suggest';
 run_commands($commands);
 
 // Apply patches.

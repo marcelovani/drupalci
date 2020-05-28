@@ -3,8 +3,8 @@
 # In order to push you need to run docker login first
 # i.e. docker login -u "myusername" -p "mypassword" docker.io
 
-echo [INFO] Running builds
-sh build_all.sh
+#echo [INFO] Running builds
+#sh build_all.sh
 
 echo [INFO] Deploying
 cd ./7/apache \

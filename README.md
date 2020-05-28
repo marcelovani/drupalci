@@ -139,12 +139,12 @@ Copy the [.circleci](https://github.com/marcelovani/drupalci/blob/master/8/apach
 Building images
 
 ```
-./build_all.sh
+make build
 ```
 
 Building and deploying
 
 ```
-./build_deploy_all.sh
+make deploy
 ```
 

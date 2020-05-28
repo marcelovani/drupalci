@@ -36,7 +36,7 @@ if (!empty ($args['vcs'])) {
   }
   $options = json_encode($options, JSON_UNESCAPED_SLASHES);
 
-  $commands[] = 'cd /var/www/html && sudo -u www-data composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
+  $commands[] = 'sudo -u www-data composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
 }
 
 // Composer require.
@@ -59,8 +59,7 @@ if (!empty ($args['dependencies'])) {
 }
 
 $options = ' --prefer-source --prefer-stable --no-progress --no-suggest --no-interaction';
-$commands[] = 'cd /var/www/html && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require) . $options;
-$commands[] = 'cd /var/www/html && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer --no-progress --no-suggest';
+$commands[] = 'sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require) . $options;
 run_commands($commands);
 
 // Apply patches.

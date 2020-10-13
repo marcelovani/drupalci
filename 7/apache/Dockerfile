@@ -1,4 +1,4 @@
-FROM drupal:7.72
+FROM drupal:7-apache
 
 ENV DRUPAL_VERSION 7
 
@@ -32,7 +32,8 @@ RUN set -ex \
 RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/local/bin --filename=composer \
     && composer global require hirak/prestissimo:^0.3 \
-    && sudo -u www-data composer install
+    && sudo -u www-data composer install \
+    && composer --version
 
 COPY bootstrap.php .
 COPY runtests.php .

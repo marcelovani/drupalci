@@ -26,11 +26,11 @@ RUN apt-get update \
         git \
         sqlite3 > /dev/null
 
-RUN sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer1
-RUN sudo -u www-data curl -L https://getcomposer.org/composer-2.phar --output /tmp/composer-2.phar \
-    && chmod +x /tmp/composer-2.phar \
-    && cp /tmp/composer-2.phar /usr/bin/composer
-#RUN sudo -u www-data composer global require hirak/prestissimo:^0.3
+#RUN sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer
+RUN sudo curl -L https://getcomposer.org/composer-2.phar --output ~/composer-2.phar \
+    && sudo chmod +x ~/composer-2.phar \
+    && sudo mv ~/composer-2.phar /usr/local/bin/composer \
+    && composer --version
 
 RUN sudo curl -L -o /usr/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.4.2/drush.phar \
     && sudo chmod +x /usr/bin/drush

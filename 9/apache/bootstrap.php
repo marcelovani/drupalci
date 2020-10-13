@@ -36,6 +36,7 @@ if (!empty ($args['vcs'])) {
   }
   $options = json_encode($options, JSON_UNESCAPED_SLASHES);
 
+  $commands[] = 'sudo -u www-data composer --version';
   $commands[] = 'sudo -u www-data composer config repositories.' . $args['project'] . ' \'' . $options . '\'';
 }
 

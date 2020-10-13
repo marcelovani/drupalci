@@ -1,6 +1,7 @@
 <?php
 function run_tests($args) {
   $commands = array();
+  $commands[] = 'drush --version';
   $commands[] = 'sudo -u www-data drush si minimal --db-url=sqlite://sites/default/files/.ht.sqlite -y install_configure_form.update_status_module="array(FALSE,FALSE)"';
   $commands[] = 'drush en -y simpletest';
   $commands[] = 'drush en -y ' . $args['project'];

@@ -6,16 +6,16 @@ RUN cd /var/www \
     && rm -rf html \
     && sudo -u www-data composer create-project -s alpha --no-install drupal/recommended-project:^9 html
 
-RUN sudo -u www-data composer require --no-update \
-    phpunit/phpunit:^7.0 \
-    symfony/phpunit-bridge:^5.0 \
-    behat/mink-selenium2-driver:^1.0 \
-    behat/mink-browserkit-driver:^1.0 \
-    behat/mink-goutte-driver:^1.0 \
-    mikey179/vfsstream:^1.0 \
-    drupal/coder:^8.0
-
-RUN sudo -u www-data composer update
+RUN cd /var/www/html \
+    && sudo -u www-data composer require --no-update \
+       phpunit/phpunit:^7.0 \
+       symfony/phpunit-bridge:^5.0 \
+       behat/mink-selenium2-driver:^1.0 \
+       behat/mink-browserkit-driver:^1.0 \
+       behat/mink-goutte-driver:^1.0 \
+       mikey179/vfsstream:^1.0 \
+       drupal/coder:^8.0 \
+    && sudo -u www-data composer update
 
 COPY sqlite.patch ./web
 RUN echo Applying patch to core to make it work with Sqlite on Debian \

@@ -3,44 +3,40 @@
 
 sh update.sh
 
+DIR=$(pwd)
+
 echo "\033[1;0m"
 clear
 
 echo "\033[1;104m"
 echo "\033[1;33m[INFO] Build drupalci:7-apache" \
-  && cd ./7/apache \
-  && docker build -t marcelovani/drupalci:7-apache . \
-  && cd ../../
+  && cd ${DIR}/7/apache \
+  && docker build -t marcelovani/drupalci:7-apache .
 
 echo "\033[1;100m"
 echo "\033[1;33m[INFO] Build drupalci:7-apache-interactive" \
-  && cd ./7/apache-interactive \
-  && docker build -t marcelovani/drupalci:7-apache-interactive . \
-  && cd ../../
+  && cd ${DIR}/7/apache-interactive \
+  && docker build -t marcelovani/drupalci:7-apache-interactive .
 
 echo "\033[1;104m"
 echo "\033[1;33m[INFO] Build drupalci:8-apache" \
-  && cd ./8/apache \
-  && docker build -t marcelovani/drupalci:8-apache . \
-  && cd ../../
+  && cd ${DIR}/8/apache \
+  && docker build -t marcelovani/drupalci:8-apache .
 
 echo "\033[1;100m"
 echo "\033[1;33m[INFO] Build drupalci:8-apache-interactive" \
-  && cd ./8/apache-interactive \
-  && docker build -t marcelovani/drupalci:8-apache-interactive . \
-  && cd ../../
+  && cd ${DIR}/8/apache-interactive \
+  && docker build -t marcelovani/drupalci:8-apache-interactive .
 
 echo "[1;104m"
 echo "\033[1;33m[INFO] Build drupalci:9-apache\033" \
-  && cd ./9/apache \
-  && docker build -t marcelovani/drupalci:9-apache . \
-  && cd ../../
+  && cd ${DIR}/9/apache \
+  && docker build -t marcelovani/drupalci:9-apache .
 
 echo "\033[1;100m"
 echo "\033[1;33m[INFO] Build drupalci:9-apache-interactive" \
-  && pwd && ls -al &&  cd ./9/apache-interactive \
-  && docker build -t marcelovani/drupalci:9-apache-interactive . \
-  && cd ../../
+  && cd ${DIR}/9/apache-interactive \
+  && docker build -t marcelovani/drupalci:9-apache-interactive .
 
 echo "\033[1;0m"
 

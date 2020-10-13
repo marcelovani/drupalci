@@ -59,7 +59,8 @@ if (!empty ($args['dependencies'])) {
 }
 
 $options = ' --prefer-source --prefer-stable --no-progress --no-suggest --no-interaction';
-$commands[] = 'sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require ' . implode(' ', $composer_require) . $options;
+$commands[] = 'sudo -u www-data composer --version';
+$commands[] = 'sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer --profile require ' . implode(' ', $composer_require) . $options;
 run_commands($commands);
 
 // Apply patches.

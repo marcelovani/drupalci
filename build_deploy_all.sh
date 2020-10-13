@@ -6,27 +6,23 @@
 #echo [INFO] Running builds
 #sh build_all.sh
 
+DIR=$(pwd)
+
 echo [INFO] Deploying
-cd ./7/apache \
-  && docker push marcelovani/drupalci:7-apache \
-  && cd ../../
+cd ${DIR}/7/apache \
+  && docker push marcelovani/drupalci:7-apache
 
-cd ./7/apache-interactive \
-  && docker push marcelovani/drupalci:7-apache-interactive \
-  && cd ../../
+cd ${DIR}/7/apache-interactive \
+  && docker push marcelovani/drupalci:7-apache-interactive
 
-cd ./8/apache \
-  && docker push marcelovani/drupalci:8-apache \
-  && cd ../../
+cd ${DIR}/8/apache \
+  && docker push marcelovani/drupalci:8-apache
 
-cd ./8/apache-interactive \
-  && docker push marcelovani/drupalci:8-apache-interactive \
-  && cd ../../
+cd ${DIR}/8/apache-interactive \
+  && docker push marcelovani/drupalci:8-apache-interactive
 
-cd ./9/apache \
-  && docker push marcelovani/drupalci:9-apache \
-  && cd ../../
+cd ${DIR}/9/apache \
+  && docker push marcelovani/drupalci:9-apache
 
-cd ./9/apache-interactive \
-  && docker push marcelovani/drupalci:9-apache-interactive \
-  && cd ../../
+cd ${DIR}/9/apache-interactive \
+  && docker push marcelovani/drupalci:9-apache-interactive

@@ -1,4 +1,4 @@
-FROM drupal:7-apache
+FROM drupal:7.72
 
 ENV DRUPAL_VERSION 7
 
@@ -22,11 +22,11 @@ RUN set -ex \
 
 RUN set -ex \
     && echo Applying patch to core since composer cannot do it \
-    && curl -L -o sqlite.patch https://www.drupal.org/files/issues/2019-02-21/1713332-83.patch \
+    && curl -L -o sqlite.patch https://www.drupal.org/files/issues/2020-10-03/1713332-97.patch \
     && patch -p1 < sqlite.patch
 
 RUN set -ex \
-    && curl -L -o /usr/bin/drush https://github.com/drush-ops/drush/releases/download/8.1.18/drush.phar \
+    && curl -L -o /usr/bin/drush https://github.com/drush-ops/drush/releases/download/8.4.5/drush.phar \
     && chmod +x /usr/bin/drush
 
 RUN set -ex \

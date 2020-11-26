@@ -59,18 +59,20 @@ if (!empty ($args['dependencies'])) {
   $composer_require = array_merge($composer_require, $dependencies);
 }
 
-$options = ' --prefer-source --prefer-stable --no-progress --no-suggest --no-interaction';
+$options = ' --prefer-source --prefer-stable --no-progress --no-interaction';
 $commands[] = 'sudo -u www-data composer --version';
 $commands[] = 'sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer --profile require ' . implode(' ', $composer_require) . $options;
+$commands[] = 'cd /var/www/html/web/modules/contrib/' . $args['project'] . '&& git log --pretty=oneline -5; cd';
 run_commands($commands);
 
 // Apply patches.
 if (!empty($args['patches'])) {
   $patches = explode(',', $args['patches']);
   foreach ($patches as  $patch) {
-    $commands[] = 'curl -L -o modules/' . $args['project'] . '/'. basename($patch) . ' ' . trim($patch);
-    $commands[] = 'cd modules/' . $args['project'] . '; patch -p1 < ' . basename($patch);
+    $commands[] = 'cd /var/www/html && curl -L -o web/modules/contrib/' . $args['project'] . '/'. basename($patch) . ' ' . trim($patch);
+    $commands[] = 'cd /var/www/html/web/modules/contrib/' . $args['project'] . '; patch -p1 < ' . basename($patch);
   }
+  run_commands($commands);
 }
 
 // Run tests.

@@ -19,6 +19,7 @@ The parameters for the runtests.php script are:
 Run tests from the a released version of AdsTxt module
 
 ```bash
+docker pull marcelovani/drupalci:9-apache
 docker run --name drupalci --rm marcelovani/drupalci:9-apache \
        --project adstxt \
        --version ^1.0.0
@@ -28,6 +29,7 @@ docker run --name drupalci --rm marcelovani/drupalci:9-apache \
 Run tests from the a released version of Captcha Keypad module
 
 ```bash
+docker pull marcelovani/drupalci:8-apache
 docker run --name drupalci --rm marcelovani/drupalci:8-apache \
        --project captcha_keypad \
        --version ^1.0.0
@@ -36,6 +38,7 @@ docker run --name drupalci --rm marcelovani/drupalci:8-apache \
 ### Drupal 7
 
 ```bash
+docker pull marcelovani/drupalci:7-apache
 docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --project captcha_keypad \
        --version ^1.0.0
@@ -76,6 +79,7 @@ See [Non feature branches](https://getcomposer.org/doc/04-schema.md#non-feature-
 You can also specify the repository using --vcs.
 
 ```bash
+docker pull marcelovani/drupalci:8-apache
 docker run --name drupalci --rm marcelovani/drupalci:8-apache \
        --project captcha_keypad \
        --version dev-8.x-1.x \
@@ -86,6 +90,7 @@ docker run --name drupalci --rm marcelovani/drupalci:8-apache \
 You can provide a list of patches to be applied to the project.
 
 ```bash
+docker pull marcelovani/drupalci:7-apache
 docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --project amp \
        --version dev-1.x \

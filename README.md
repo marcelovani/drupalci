@@ -55,7 +55,7 @@ docker run --rm --name drupalci -p 8080:80 -d marcelovani/drupalci:8-apache-inte
 
 Using a mounted folder for a custom module
 ```bash
-docker run --rm --name drupalci -v ~modules/project_name:/var/www/html/modules/project_name -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
+docker run --rm --name drupalci -v ~/adstxt:/var/www/html/web/modules/contrib/adstxt -p 8080:80 -d marcelovani/drupalci:9-apache-interactive
 ``` 
 
 Getting into the container

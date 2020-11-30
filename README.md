@@ -53,7 +53,7 @@ Starting the server
 docker run --rm --name drupalci -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
 ```
 
-Using a mounted folder for a custom module
+Using a mounted folder for a custom module, in this case *adstxt*
 ```bash
 docker run --rm --name drupalci -v ~/adstxt:/var/www/html/web/modules/contrib/adstxt -p 8080:80 -d marcelovani/drupalci:9-apache-interactive
 ``` 
@@ -65,7 +65,8 @@ docker exec -it drupalci bash
 
 Running tests manually
 ```
-sudo -u www-data php core/scripts/run-tests.sh --php /usr/local/bin/php --keep-results --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/project_name"
+php web/core/scripts/drupal install minimal
+php web/core/scripts/run-tests.sh --php /usr/local/bin/php --verbose --keep-results --color --concurrency "32" --repeat "1" --types "Simpletest,PHPUnit-Unit,PHPUnit-Kernel,PHPUnit-Functional" --sqlite sites/default/files/.ht.sqlite --url http://localhost --directory "modules/contrib/adstxt"
 ```
 
 Opening in the browser

@@ -7,8 +7,8 @@ RUN cd /var/www \
     && sudo -u www-data composer create-project -s alpha --no-install drupal/recommended-project:^9 html
 
 RUN cd /var/www/html \
-    && sudo -u www-data composer require --no-update \
-       phpunit/phpunit:^7.0 \
+    && sudo -u www-data composer require --with-all-dependencies --no-update \
+       phpunit/phpunit:^8.0 \
        symfony/phpunit-bridge:^5.0 \
        behat/mink-selenium2-driver:^1.0 \
        behat/mink-browserkit-driver:^1.0 \

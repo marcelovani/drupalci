@@ -19,6 +19,7 @@ The parameters for the runtests.php script are:
 Run tests from the a released version of AdsTxt module
 
 ```bash
+docker pull marcelovani/drupalci:9-apache
 docker run --name drupalci --rm marcelovani/drupalci:9-apache \
        --project adstxt \
        --version ^1.0.0
@@ -28,6 +29,7 @@ docker run --name drupalci --rm marcelovani/drupalci:9-apache \
 Run tests from the a released version of Captcha Keypad module
 
 ```bash
+docker pull marcelovani/drupalci:8-apache
 docker run --name drupalci --rm marcelovani/drupalci:8-apache \
        --project captcha_keypad \
        --version ^1.0.0
@@ -36,6 +38,7 @@ docker run --name drupalci --rm marcelovani/drupalci:8-apache \
 ### Drupal 7
 
 ```bash
+docker pull marcelovani/drupalci:7-apache
 docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --project captcha_keypad \
        --version ^1.0.0
@@ -50,9 +53,9 @@ Starting the server
 docker run --rm --name drupalci -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
 ```
 
-Using a mounted folder for a custom module
+Using a mounted folder for a custom module, in this example we are using **adstxt** module
 ```bash
-docker run --rm --name drupalci -v ~modules/project_name:/var/www/html/modules/project_name -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
+docker run --rm --name drupalci -v ~/adstxt:/var/www/html/web/modules/contrib/adstxt -p 8080:80 -d marcelovani/drupalci:9-apache-interactive
 ``` 
 
 Getting into the container
@@ -62,12 +65,19 @@ docker exec -it drupalci bash
 
 Running tests manually
 ```
-sudo -u www-data php core/scripts/run-tests.sh --php /usr/local/bin/php --keep-results --color --concurrency "31" --sqlite sites/default/files/.ht.sqlite --verbose --directory "modules/project_name"
+cd web
+sudo -u www-data php core/scripts/drupal install minimal
+sudo -u www-data php web/core/scripts/run-tests.sh --php /usr/local/bin/php --verbose --keep-results --color --concurrency "32" --repeat "1" --types "Simpletest,PHPUnit-Unit,PHPUnit-Kernel,PHPUnit-Functional" --sqlite sites/default/files/.ht.sqlite --url http://localhost --directory "modules/contrib/adstxt"
 ```
 
 Opening in the browser
 ```bash
 open http://localhost:8080
+```
+
+Stopping the container
+```bash
+docker stop drupalci
 ```
 
 ### Forks and branches
@@ -76,6 +86,7 @@ See [Non feature branches](https://getcomposer.org/doc/04-schema.md#non-feature-
 You can also specify the repository using --vcs.
 
 ```bash
+docker pull marcelovani/drupalci:8-apache
 docker run --name drupalci --rm marcelovani/drupalci:8-apache \
        --project captcha_keypad \
        --version dev-8.x-1.x \
@@ -86,6 +97,7 @@ docker run --name drupalci --rm marcelovani/drupalci:8-apache \
 You can provide a list of patches to be applied to the project.
 
 ```bash
+docker pull marcelovani/drupalci:7-apache
 docker run --name drupalci --rm marcelovani/drupalci:7-apache \
        --project amp \
        --version dev-1.x \

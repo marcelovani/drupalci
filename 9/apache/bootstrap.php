@@ -84,9 +84,11 @@ if (getenv('DRUPAL_VERSION') == '7') {
 }
 else {
   $commands[] = 'cp -a /var/www/html/web/sites/default/files/simpletest /artifacts';
-  $commands[] = 'cp -a /var/www/html/web/sites/simpletest/*.* /artifacts';
+  $commands[] = 'cp -a /var/www/html/web/sites/simpletest/* /artifacts';
+  $commands[] = 'cp -a /var/www/html/composer.json /artifacts';
 }
 $commands[] = 'cp -a /var/www/html/composer.json /artifacts';
+$commands[] = 'env > /artifacts/env.txt';
 
 run_commands($commands);
 

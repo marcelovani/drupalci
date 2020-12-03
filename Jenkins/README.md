@@ -31,7 +31,7 @@ Create a new Freestyle job on Jenkins and add the following arguments
 
 1. Build step: Shell command. The script to be called with the arguments above.
 
-![Script](https://github.com/marcelovani/drupalci/blob/master/Jenkins/images/7-scripts.jpg "Script")
+![Script](https://github.com/marcelovani/drupalci/blob/master/Jenkins/images/7-script.jpg "Script")
 
 ```
 [ ! -z "${VCS}" ] && VCS="--vcs ${VCS}"
@@ -48,3 +48,6 @@ ${VCS} ${PATCHES} ${DEPENDENCIES}
 1. Post build actions: Artifact. This makes Jenkins store the artifacts
 
 ![Artifacts](https://github.com/marcelovani/drupalci/blob/master/Jenkins/images/8-artifacts.jpg "Artifacts")
+
+
+Instead of doing this manually you can import [This Job as xml import](https://github.com/marcelovani/drupalci/blob/master/Jenkins/config.xml "Config.xml")

@@ -160,3 +160,8 @@ Building and deploying
 make deploy
 ```
 
+## Jenkins
+You can use these images on jenkins to automate your buildings
+
+[How to configure Jenkins](https://github.com/marcelovani/drupalci/blob/master/Jenkins "How to configure Jenkins")
+[![See how to configure Jenkins](https://github.com/marcelovani/drupalci/blob/master/Jenkins/images/0-jenkins_job.jpg)](https://github.com/marcelovani/drupalci/blob/master/Jenkins)

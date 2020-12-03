@@ -1,0 +1,95 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?><project>
+  <actions/>
+  <description>Used to test Drupal modules</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.13">
+      <siteName>https://atelier7.atlassian.net/jira/</siteName>
+    </hudson.plugins.jira.JiraProjectProperty>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.5.13">
+      <gitLabConnection>jenkins-gitlab</gitLabConnection>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>PROJECT</name>
+          <description>The project name in drupal.org</description>
+          <defaultValue/>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>VERSION</name>
+          <description>Project version</description>
+          <defaultValue>dev-1.x</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>DRUPAL</name>
+          <description>Drupal version</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>7</string>
+              <string>8</string>
+              <string>9</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>VCS</name>
+          <description>Vcs allows you to use another repository to pull packages</description>
+          <defaultValue/>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.TextParameterDefinition>
+          <name>PATCHES</name>
+          <description>URL of patches to apply</description>
+          <defaultValue/>
+          <trim>false</trim>
+        </hudson.model.TextParameterDefinition>
+        <hudson.model.TextParameterDefinition>
+          <name>DEPENDENCIES</name>
+          <description>List of package depedencies</description>
+          <defaultValue/>
+          <trim>false</trim>
+        </hudson.model.TextParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>[ ! -z "${VCS}" ] &amp;&amp; VCS="--vcs ${VCS}"
+[ ! -z "${PATCHES}" ] &amp;&amp; PATCHES="--patches ${PATCHES}"
+[ ! -z "${DEPENDENCIES}" ] &amp;&amp; DEPENDENCIES="--dependencies ${DEPENDENCIES}"
+
+docker pull marcelovani/drupalci:${DRUPAL}-apache
+docker run -v ${PWD}/artifacts:/artifacts --name drupalci --rm marcelovani/drupalci:${DRUPAL}-apache \
+--project ${PROJECT} \
+--version ${VERSION} \
+${VCS} ${PATCHES} ${DEPENDENCIES}
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>artifacts/**/*.*</artifacts>
+      <allowEmptyArchive>true</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
+  <buildWrappers/>
+</project>

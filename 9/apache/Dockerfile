@@ -8,8 +8,9 @@ RUN cd /var/www \
 
 RUN cd /var/www/html \
     && sudo -u www-data composer require --with-all-dependencies --no-update \
-       phpunit/phpunit:^8.0 \
+       phpunit/phpunit:^9.0 \
        symfony/phpunit-bridge:^5.0 \
+       phpspec/prophecy-phpunit:^2 \
        behat/mink-selenium2-driver:^1.0 \
        behat/mink-browserkit-driver:^1.0 \
        behat/mink-goutte-driver:^1.0 \

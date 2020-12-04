@@ -20,10 +20,10 @@ RUN set -ex \
         git \
         sqlite3
 
-RUN set -ex \
-    && echo Applying patch to core since composer cannot do it \
-    && curl -L -o sqlite.patch https://www.drupal.org/files/issues/2020-10-03/1713332-97.patch \
-    && patch -p1 < sqlite.patch
+#RUN set -ex \
+#    && echo Applying patch to core since composer cannot do it \
+#    && curl -L -o sqlite.patch https://www.drupal.org/files/issues/2020-10-03/1713332-97.patch \
+#    && patch -p1 < sqlite.patch
 
 RUN set -ex \
     && curl -L -o /usr/bin/drush https://github.com/drush-ops/drush/releases/download/8.4.5/drush.phar \

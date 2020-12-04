@@ -61,7 +61,8 @@ if (!empty ($args['dependencies'])) {
 
 $options = ' --prefer-source --prefer-stable --no-progress --no-interaction';
 $commands[] = 'sudo -u www-data composer --version';
-$commands[] = 'sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer --profile require ' . implode(' ', $composer_require) . $options;
+$commands[] = 'sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer --profile require --with-all-dependencies --no-update ' . implode(' ', $composer_require) . $options;
+$commands[] = 'sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer update';
 $commands[] = 'cd /var/www/html/web/modules/contrib/' . $args['project'] . '&& git log --pretty=oneline -5; cd';
 run_commands($commands);
 

@@ -61,6 +61,17 @@ if (!empty ($args['dependencies'])) {
 
 $options = ' --prefer-source --no-progress --no-interaction';
 $commands[] = 'sudo -u www-data composer --version';
+
+if (getenv('DRUPAL_VERSION') == '7' || getenv('DRUPAL_VERSION') == '8') {
+  $commands[] = 'sudo -u www-data composer config --no-plugins allow-plugins.composer/installers true';
+}
+
+if (getenv('DRUPAL_VERSION') == '8') {
+  $commands[] = 'sudo -u www-data composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true';
+  $commands[] = 'sudo -u www-data composer config --no-plugins allow-plugins.drupal/core-composer-scaffold true';
+  $commands[] = 'sudo -u www-data composer config --no-plugins allow-plugins.drupal/core-project-message true';
+}
+
 $commands[] = 'sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer --profile require --with-all-dependencies --no-update ' . implode(' ', $composer_require) . $options;
 $commands[] = 'sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer update';
 $commands[] = 'cd /var/www/html/web/modules/contrib/' . $args['project'] . ' && git log --pretty=oneline -5; cd';

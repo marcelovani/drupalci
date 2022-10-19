@@ -1,6 +1,6 @@
-FROM drupal:9-apache
+FROM drupal:10.0.0-beta2-php8.1-apache
 
-ENV DRUPAL_VERSION 9
+ENV DRUPAL_VERSION 10
 ENV APACHE_LOG_DIR /var/log/messages
 ENV APACHE_DOCUMENT_ROOT /var/www/html/web
 
@@ -24,19 +24,21 @@ RUN apt-get update \
 
 RUN cd /var/www \
     && rm -rf html \
-    && sudo -u www-data composer create-project -s alpha --no-install drupal/recommended-project:^9 html
+    && sudo -u www-data composer create-project --no-install drupal/recommended-project:^10@beta html
 
 RUN cd /var/www/html \
+    && sudo -u www-data composer update drupal/core 'drupal/core-*' --with-all-dependencies \
     && sudo -u www-data composer require --with-all-dependencies --no-update \
        phpunit/phpunit:^9.0 \
-       symfony/phpunit-bridge:^5.0 \
+       symfony/phpunit-bridge:^6.0 \
        phpspec/prophecy-phpunit:^2 \
-       behat/mink-selenium2-driver:^1.0 \
-       behat/mink-browserkit-driver:^1.0 \
-       behat/mink-goutte-driver:^1.0 \
-       mikey179/vfsstream:^1.0 \
-       drupal/coder:^8.0 \
-    && sudo -u www-data composer update
+       behat/mink:^1 \
+       behat/mink-selenium2-driver:^1 \
+       behat/mink-browserkit-driver:^2 \
+       behat/mink-goutte-driver:^2 \
+       mikey179/vfsstream:^1 \
+       drupal/coder:^8 \
+   && sudo -u www-data composer update
 
 WORKDIR /var/www/html
 

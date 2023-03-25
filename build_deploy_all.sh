@@ -28,7 +28,7 @@ cd ${DIR}/9/apache-interactive \
   && docker push marcelovani/drupalci:9-apache-interactive
 
 cd ${DIR}/10/apache \
-  && docker push marcelovani/drupalci:9-apache
+  && docker push marcelovani/drupalci:10-apache
 
 cd ${DIR}/10/apache-interactive \
-  && docker push marcelovani/drupalci:9-apache-interactive
+  && docker push marcelovani/drupalci:10-apache-interactive

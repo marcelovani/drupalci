@@ -11,7 +11,7 @@ The parameters for the runtests.php script are:
 * --project      Project or module name
 * --version      Project version or branch name [optional]. The format is the same as used in [Composer](https://getcomposer.org/doc/04-schema.md#version)
 * --vcs          Fork url [optional]
-* --profile      Drupal install profile [optional]
+* --profile      Drupal install profile [optional]
 * --patches      Specifies a list of patches to be applied. [See example below](#Patches).
 * --dependencies List of test dependencies [optional] i.e. "drupal/link:* drupal/email:^1.0"
 
@@ -174,3 +174,13 @@ You can use these images on jenkins to automate your buildings
 
 [How to configure Jenkins](https://github.com/marcelovani/drupalci/blob/master/Jenkins "How to configure Jenkins")
 [![See how to configure Jenkins](https://github.com/marcelovani/drupalci/blob/master/Jenkins/images/0-jenkins_job.jpg)](https://github.com/marcelovani/drupalci/blob/master/Jenkins)
+
+### Contributing
+Each version of Drupal has its own Dockerfile with customisations.
+Currently, there is support for Drupal 7, 8, 9 and 10.
+
+To build all, use `make build`
+To deploy all, use `make deploy`
+To build and deploy all, use `make build-deploy`
+To test all, use `make test`
+To test individual Drupal, use specific Drupal version `make test-10`

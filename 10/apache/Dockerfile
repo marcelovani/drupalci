@@ -40,6 +40,8 @@ RUN cd /var/www/html \
        drupal/coder:^8 \
    && sudo -u www-data composer update
 
+RUN cd /var/www/html && ln -s web docroot
+
 WORKDIR /var/www/html
 
 COPY bootstrap.php .

@@ -3,6 +3,7 @@ FROM drupal:9-apache
 ENV DRUPAL_VERSION 9
 ENV APACHE_LOG_DIR /var/log/messages
 ENV APACHE_DOCUMENT_ROOT /var/www/html/web
+ENV MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chromedriver:9515"]'
 
 RUN set -x
 

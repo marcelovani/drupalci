@@ -1,8 +1,9 @@
-FROM drupal:10.0.0-beta2-php8.1-apache
+FROM drupal:10-php8.2-apache
 
 ENV DRUPAL_VERSION 10
 ENV APACHE_LOG_DIR /var/log/messages
 ENV APACHE_DOCUMENT_ROOT /var/www/html/web
+ENV MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chromedriver:9515"]'
 
 RUN set -x
 

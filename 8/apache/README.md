@@ -175,12 +175,18 @@ You can use these images on jenkins to automate your buildings
 [How to configure Jenkins](https://github.com/marcelovani/drupalci/blob/master/Jenkins "How to configure Jenkins")
 [![See how to configure Jenkins](https://github.com/marcelovani/drupalci/blob/master/Jenkins/images/0-jenkins_job.jpg)](https://github.com/marcelovani/drupalci/blob/master/Jenkins)
 
-### Contributing
+## Contributing
 Each version of Drupal has its own Dockerfile with customisations.
+The templates folder contains the commands for each Drupal and bootstrap.
 Currently, there is support for Drupal 7, 8, 9 and 10.
 
-To build all, use `make build`
+### Building and updating
+To build all, upgrading packages, use `make build`
 To deploy all, use `make deploy`
 To build and deploy all, use `make build-deploy`
+ps: Deploy will push the image to Docker hub.
+
+### Testing
 To test all, use `make test`
 To test individual Drupal, use specific Drupal version `make test-10`
+ps: Always test all Drupal versions before deploying.

@@ -1,4 +1,4 @@
-FROM drupal:7-apache
+FROM drupal:7-php7.4-apache
 
 ENV DRUPAL_VERSION 7
 
@@ -32,6 +32,8 @@ RUN set -ex \
 RUN set -ex \
     && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/local/bin --filename=composer \
     && composer --version
+
+RUN a2enmod headers; service apache2 restart
 
 COPY bootstrap.php .
 COPY runtests.php .

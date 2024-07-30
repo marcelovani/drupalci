@@ -79,6 +79,12 @@ sudo -u www-data php core/scripts/drupal install minimal
 sudo -u www-data php core/scripts/run-tests.sh --php /usr/local/bin/php --verbose --keep-results --color --concurrency "32" --repeat "1" --types "Simpletest,PHPUnit-Unit,PHPUnit-Kernel,PHPUnit-Functional" --sqlite sites/default/files/.ht.sqlite --url http://localhost --directory "modules/contrib/adstxt"
 ```
 
+To install the site using sql lite and Drush, use
+
+`drush si --db-url=sqlite://:memory`
+
+See more details in https://www.drush.org/12.x/commands/site_install
+
 Opening in the browser
 ```bash
 open http://localhost:8080

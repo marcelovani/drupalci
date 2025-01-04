@@ -1,5 +1,6 @@
 FROM drupal:11-php8.3-apache
 
+ENV VERSION=1.0.0
 ENV DRUPAL_VERSION 11
 ENV APACHE_LOG_DIR /var/log/messages
 ENV APACHE_DOCUMENT_ROOT /var/www/html/web
@@ -25,7 +26,7 @@ RUN apt-get update \
 
 RUN cd /var/www \
     && rm -rf html \
-    && sudo -u www-data composer create-project --no-install drupal/recommended-project:^10@beta html
+    && sudo -u www-data composer create-project --no-install drupal/recommended-project:^${DRUPAL_VERSION}@beta html
 
 RUN cd /var/www/html \
     && sudo -u www-data composer update drupal/core 'drupal/core-*' --with-all-dependencies \

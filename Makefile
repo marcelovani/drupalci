@@ -1,4 +1,7 @@
 #!make
+# @todo use it like this https://github.com/jenkinsci/docker-ssh-agent/blob/5.23.0/Makefile
+# https://github.com/jenkinsci/docker-ssh-agent/blob/5.23.0/README.md
+# https://github.com/jenkinsci/docker-agent/blob/master/Makefile
 
 build:
 	./build_all.sh
@@ -17,6 +20,7 @@ test:
 	make test-8
 	make test-9
 	make test-10
+	make test-11
 
 test-7:
 	docker run --name drupalcitest --rm marcelovani/drupalci:7-apache --project adstxt --version ^1.0.0
@@ -29,3 +33,6 @@ test-9:
 
 test-10:
 	docker run --name drupalcitest --rm marcelovani/drupalci:10-apache --project token --version ^1.0.0
+
+test-11:
+	docker run --name drupalcitest --rm marcelovani/drupalci:11-apache --project token --version ^1.0.0

@@ -200,8 +200,13 @@ ps: Always test all Drupal versions before deploying.
 ### Chrome Driver
 You can use Drupal [CI Chrome driver](https://hub.docker.com/r/drupalci/webdriver-chromedriver/tags) to run Functional Javascript tests.
 
+```bash
+docker run --rm --name chromedriver -p 9515:9515 -d drupalci/webdriver-chromedriver:production
+```
+
 Alternatively you can use Selenium, see https://github.com/lando/drupal/issues/27
 
+#### Chrome Driver - Local Development
 Starting the Chrome Driver server locally
 ```bash
 npm install

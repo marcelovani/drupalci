@@ -5,7 +5,7 @@ LABEL com.circleci.preserve-entrypoint=true
 ENV DRUPAL_VERSION 8
 ENV APACHE_LOG_DIR /var/log/messages
 ENV APACHE_DOCUMENT_ROOT /var/www/html/web
-ENV MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://chromedriver:9515"]'
+ENV MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://host.docker.internal:9515"]'
 
 RUN set -x
 

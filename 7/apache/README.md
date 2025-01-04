@@ -196,3 +196,24 @@ ps: Deploy will push the image to Docker hub.
 To test all, use `make test`
 To test individual Drupal, use specific Drupal version `make test-10`
 ps: Always test all Drupal versions before deploying.
+
+### Chrome Driver
+You can use Drupal [CI Chrome driver](https://hub.docker.com/r/drupalci/webdriver-chromedriver/tags) to run Functional Javascript tests.
+
+Alternatively you can use Selenium, see https://github.com/lando/drupal/issues/27
+
+Starting the Chrome Driver server locally
+```bash
+npm install
+npm start
+```
+
+Then test if Chrome Driver is working
+```bash
+npm test
+```
+
+Looking at the Chrome Driver logs
+```bash
+npm run show_logs
+```

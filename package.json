@@ -1,0 +1,24 @@
+{
+  "name": "drupalci",
+  "version": "1.0.0",
+  "description": "Drupal CI tests",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^4.27.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "docker run --rm --name chromedriver -p 9515:9515 -d drupalci/webdriver-chromedriver:production",
+    "stop": "docker stop chromedriver",
+    "show_logs": "docker exec -i chromedriver bash -c 'tail -f /tmp/chromedriver.log'",
+    "test": "HUB_URL='http://localhost:9515' BROWSER='chrome' node tests/test_chromedriver.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcelovani/drupalci.git"
+  },
+  "author": "Marcelo Vani",
+  "homepage": "https://github.com/marcelovani/drupalci#readme"
+}

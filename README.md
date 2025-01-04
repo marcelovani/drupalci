@@ -59,12 +59,12 @@ It is useful to perform manual tasks for the purposes of debugging.
 
 Starting the server
 ```bash
-docker run --rm --name drupalci -p 8080:80 -d marcelovani/drupalci:8-apache-interactive
+docker run --rm --name drupalci -p 8080:80 -d marcelovani/drupalci:11-apache-interactive
 ```
 
 Using a mounted folder for a custom module, in this example we are using **adstxt** module
 ```bash
-docker run --rm --name drupalci -v ~/adstxt:/var/www/html/web/modules/contrib/adstxt -p 8080:80 -d marcelovani/drupalci:9-apache-interactive
+docker run --rm --name drupalci -v ~/adstxt:/var/www/html/web/modules/contrib/adstxt -p 8080:80 -d marcelovani/drupalci:11-apache-interactive
 ``` 
 
 Getting into the container

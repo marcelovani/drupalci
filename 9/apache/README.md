@@ -15,12 +15,12 @@ The parameters for the runtests.php script are:
 * --patches      Specifies a list of patches to be applied. [See example below](#Patches).
 * --dependencies List of test dependencies [optional] i.e. "drupal/link:* drupal/email:^1.0"
 
-### Drupal 10
+### Drupal 10, Drupal 11
 Run tests from the a released version of AdsTxt module
 
 ```bash
-docker pull marcelovani/drupalci:10-apache
-docker run --name drupalci --rm marcelovani/drupalci:10-apache \
+docker pull marcelovani/drupalci:11-apache
+docker run --name drupalci --rm marcelovani/drupalci:11-apache \
        --project adstxt \
        --version ^1.0.0
 

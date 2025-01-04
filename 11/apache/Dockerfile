@@ -31,13 +31,12 @@ RUN cd /var/www \
 RUN cd /var/www/html \
     && sudo -u www-data composer update drupal/core 'drupal/core-*' --with-all-dependencies \
     && sudo -u www-data composer require --with-all-dependencies --no-update \
-       phpunit/phpunit:^9.0 \
+       phpunit/phpunit:^10.0 \
        symfony/phpunit-bridge:^6.0 \
        phpspec/prophecy-phpunit:^2 \
        behat/mink:^1 \
        behat/mink-selenium2-driver:^1 \
        behat/mink-browserkit-driver:^2 \
-       behat/mink-goutte-driver:^2 \
        mikey179/vfsstream:^1 \
        drupal/coder:^8 \
    && sudo -u www-data composer update
@@ -49,6 +48,13 @@ WORKDIR /var/www/html
 COPY bootstrap.php .
 COPY runtests.php .
 COPY entrypoint.sh .
+COPY sqlite.patch .
+
+# Temporary fix to allow sqlite testing.
+RUN set -ex \
+   && cd web \
+   && ls -al \
+   && patch -p1 < ../sqlite.patch
 
 RUN chown -R www-data:www-data /var/www
 

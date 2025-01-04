@@ -1,0 +1,13 @@
+diff --git a/core/modules/sqlite/src/Driver/Database/sqlite/Install/Tasks.php b/core/modules/sqlite/src/Driver/Database/sqlite/Install/Tasks.php
+index c03e6226..9cf647e6 100644
+--- a/core/modules/sqlite/src/Driver/Database/sqlite/Install/Tasks.php
++++ b/core/modules/sqlite/src/Driver/Database/sqlite/Install/Tasks.php
+@@ -19,7 +19,7 @@ class Tasks extends InstallTasks {
+    *
+    * @see https://www.sqlite.org/json1.html
+    */
+-  const SQLITE_MINIMUM_VERSION = '3.45';
++  const SQLITE_MINIMUM_VERSION = '3.40';
+ 
+   /**
+    * {@inheritdoc}

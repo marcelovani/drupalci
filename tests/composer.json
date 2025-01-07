@@ -1,0 +1,17 @@
+{
+    "name": "marcelo.vani/tests",
+    "autoload": {
+        "psr-4": {
+            "MarceloVani\\Tests\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Marcelo Vani",
+            "email": "marcellovani@yahoo.co.uk"
+        }
+    ],
+    "require": {
+        "php-webdriver/webdriver": "^1.15"
+    }
+}

@@ -1,9 +1,9 @@
 FROM drupal:11-php8.3-apache
 
 ENV VERSION=1.0.0
-ENV DRUPAL_VERSION 11
-ENV APACHE_LOG_DIR /var/log/messages
-ENV APACHE_DOCUMENT_ROOT /var/www/html/web
+ENV DRUPAL_VERSION=11
+ENV APACHE_LOG_DIR=/var/log/messages
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/web
 ENV MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://host.docker.internal:9515"]'
 
 RUN set -x

@@ -1,6 +1,6 @@
 FROM drupal:7-php7.4-apache
 
-ENV DRUPAL_VERSION 7
+ENV DRUPAL_VERSION=7
 
 RUN docker-php-ext-install bcmath > /dev/null
 

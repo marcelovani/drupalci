@@ -31,16 +31,9 @@ RUN cd /var/www \
 RUN cd /var/www/html \
     && sudo -u www-data composer update drupal/core 'drupal/core-*' --with-all-dependencies \
     && sudo -u www-data composer require --with-all-dependencies --no-update \
-       phpunit/phpunit:^9.0 \
-       symfony/phpunit-bridge:^6.0 \
-       phpspec/prophecy-phpunit:^2 \
-       behat/mink:^1 \
-       behat/mink-selenium2-driver:^1 \
-       behat/mink-browserkit-driver:^2 \
-       behat/mink-goutte-driver:^2 \
-       mikey179/vfsstream:^1 \
-       drupal/coder:^8 \
-   && sudo -u www-data composer update
+       drupal/core-dev:^${DRUPAL_VERSION} \
+       mikey179/vfsstream:^1.0 \
+    && sudo -u www-data composer update
 
 RUN cd /var/www/html && ln -s web docroot
 

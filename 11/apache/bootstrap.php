@@ -61,6 +61,7 @@ if (!empty ($args['dependencies'])) {
 
 $options = ' --prefer-source --no-progress --no-interaction';
 $commands[] = 'sudo -u www-data composer --version';
+$commands[] = 'sudo -u www-data composer config minimum-stability dev';
 
 if (getenv('DRUPAL_VERSION') == '7' || getenv('DRUPAL_VERSION') == '8') {
   $commands[] = 'sudo -u www-data composer config --no-plugins allow-plugins.composer/installers true';

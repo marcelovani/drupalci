@@ -23,7 +23,7 @@ RUN set -ex \
         sqlite3
 
 RUN set -ex \
-    && curl -L -o /usr/bin/drush https://github.com/drush-ops/drush/releases/download/8.4.5/drush.phar \
+    && curl -L -o /usr/bin/drush https://github.com/drush-ops/drush/releases/download/8.5.0/drush.phar \
     && chmod +x /usr/bin/drush
 
 RUN sudo curl -L https://getcomposer.org/composer-2.phar --output ~/composer-2.phar \

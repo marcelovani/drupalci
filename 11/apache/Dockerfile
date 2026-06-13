@@ -1,4 +1,4 @@
-FROM drupal:11-php8.4-apache
+FROM drupal:11-php8.5-apache
 
 ENV VERSION=1.0.0
 ENV DRUPAL_VERSION=11

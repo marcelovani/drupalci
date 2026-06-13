@@ -1,4 +1,4 @@
-FROM drupal:10-php8.3-apache
+FROM drupal:10-php8.4-apache
 
 ENV VERSION=1.0.0
 ENV DRUPAL_VERSION=10

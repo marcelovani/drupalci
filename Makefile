@@ -21,6 +21,7 @@ test:
 	make test-9
 	make test-10
 	make test-11
+	make test-12
 
 test-7:
 	docker run --name drupalcitest --rm marcelovani/drupalci:7-apache --project adstxt --version ^1.0.0
@@ -36,3 +37,6 @@ test-10:
 
 test-11:
 	docker run --name drupalcitest --rm marcelovani/drupalci:11-apache --project acquia_vwo --version ^1.0.0
+
+test-12:
+	docker run --name drupalcitest --rm marcelovani/drupalci:12-apache --project token --version ^1.0.0

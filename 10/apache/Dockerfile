@@ -1,4 +1,4 @@
-FROM drupal:10-php8.2-apache
+FROM drupal:10-php8.4-apache
 
 ENV VERSION=1.0.0
 ENV DRUPAL_VERSION=10
@@ -29,6 +29,7 @@ RUN cd /var/www \
     && sudo -u www-data composer create-project --no-install drupal/recommended-project:^${DRUPAL_VERSION}@beta html
 
 RUN cd /var/www/html \
+    && sudo -u www-data composer config --no-interaction policy.advisories.block false \
     && sudo -u www-data composer update drupal/core 'drupal/core-*' --with-all-dependencies \
     && sudo -u www-data composer require --with-all-dependencies --no-update \
        drupal/core-dev:^${DRUPAL_VERSION} \

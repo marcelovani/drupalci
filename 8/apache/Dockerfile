@@ -1,4 +1,6 @@
-FROM drupal:8-apache
+# drupal:8 is EOL (PHP 7.4/Buster). Pin to linux/amd64 to avoid PHP 7.4 ARM64
+# segfaults under emulation. Runs via Rosetta on Apple Silicon; native on CI.
+FROM --platform=linux/amd64 drupal:8-apache
 
 LABEL com.circleci.preserve-entrypoint=true
 
@@ -19,6 +21,11 @@ RUN mkdir /var/log/messages
 
 RUN docker-php-ext-install bcmath > /dev/null
 RUN docker-php-ext-install opcache > /dev/null
+# Debian Buster is EOL; redirect to the archive mirror.
+RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list \
+    && sed -i 's|security.debian.org/debian-security|archive.debian.org/debian-security|g' /etc/apt/sources.list \
+    && sed -i '/buster-updates/d' /etc/apt/sources.list
+
 RUN apt-get update \
     && apt-get install -y \
         sudo \
@@ -46,10 +53,15 @@ RUN cd /var/www \
     && sudo -u www-data composer --no-cache --profile create-project -s alpha --no-install drupal/recommended-project:^8 html
 
 RUN cd /var/www/html \
-    && sudo -u www-data composer require --no-update \
+    && sudo -u www-data composer config --no-interaction policy.advisories.block false \
+    && sudo -u www-data composer config --no-plugins allow-plugins.composer/installers true \
+    && sudo -u www-data composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true \
+    && sudo -u www-data composer config --no-plugins allow-plugins.drupal/core-composer-scaffold true \
+    && sudo -u www-data composer config --no-plugins allow-plugins.drupal/core-project-message true \
+    && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require --no-update \
        drupal/core-dev:^${DRUPAL_VERSION} \
        mikey179/vfsstream:^1.0 \
-    && sudo -u www-data composer update
+    && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer update --with-all-dependencies
 
 RUN cd /var/www/html && ln -s web docroot
 

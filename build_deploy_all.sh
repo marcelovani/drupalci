@@ -38,3 +38,9 @@ cd ${DIR}/11/apache \
 
 cd ${DIR}/11/apache-interactive \
   && docker push marcelovani/drupalci:11-apache-interactive
+
+cd ${DIR}/12/apache \
+  && docker push marcelovani/drupalci:12-apache
+
+cd ${DIR}/12/apache-interactive \
+  && docker push marcelovani/drupalci:12-apache-interactive

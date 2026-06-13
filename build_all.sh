@@ -13,6 +13,7 @@ sh build_8.sh
 sh build_9.sh
 sh build_10.sh
 sh build_11.sh
+sh build_12.sh
 
 echo "\033[1;0m"
 

@@ -1,4 +1,6 @@
-FROM drupal:7-php7.4-apache
+# drupal:7 is EOL (PHP 7.4/Buster). Pin to linux/amd64 to avoid PHP 7.4 ARM64
+# segfaults under emulation. Runs via Rosetta on Apple Silicon; native on CI.
+FROM --platform=linux/amd64 drupal:7-php7.4-apache
 
 ENV DRUPAL_VERSION=7
 
@@ -20,17 +22,13 @@ RUN set -ex \
         git \
         sqlite3
 
-#RUN set -ex \
-#    && echo Applying patch to core since composer cannot do it \
-#    && curl -L -o sqlite.patch https://www.drupal.org/files/issues/2020-10-03/1713332-97.patch \
-#    && patch -p1 < sqlite.patch
-
 RUN set -ex \
-    && curl -L -o /usr/bin/drush https://github.com/drush-ops/drush/releases/download/8.4.5/drush.phar \
+    && curl -L -o /usr/bin/drush https://github.com/drush-ops/drush/releases/download/8.5.0/drush.phar \
     && chmod +x /usr/bin/drush
 
-RUN set -ex \
-    && sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/local/bin --filename=composer \
+RUN sudo curl -L https://getcomposer.org/composer-2.phar --output ~/composer-2.phar \
+    && sudo chmod +x ~/composer-2.phar \
+    && sudo mv ~/composer-2.phar /usr/local/bin/composer \
     && composer --version
 
 RUN a2enmod headers; service apache2 restart

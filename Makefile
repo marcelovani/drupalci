@@ -36,7 +36,7 @@ test-10:
 	docker run --name drupalcitest --rm marcelovani/drupalci:10-apache --project acquia_vwo --version ^1.0.0
 
 test-11:
-	docker run --name drupalcitest --rm marcelovani/drupalci:11-apache --project acquia_vwo --version ^1.0.0
+	docker run --name drupalcitest --rm marcelovani/drupalci:11-apache --project token --version ^1.0.0
 
 test-12:
 	docker run --name drupalcitest --rm marcelovani/drupalci:12-apache --project token --version ^1.0.0

@@ -11,6 +11,7 @@ function run_tests($args) {
     '--concurrency "32" ' .
     '--repeat "1" ' .
     '--sqlite sites/default/files/.ht.sqlite ' .
+    '--url http://localhost ' .
     '--verbose ' .
     '--directory "modules/contrib/' . $args['project'] . '"';
 

@@ -1,4 +1,4 @@
-FROM drupal:9-apache
+FROM drupal:9-php8.1-apache
 
 ENV DRUPAL_VERSION=9
 ENV APACHE_LOG_DIR=/var/log/messages

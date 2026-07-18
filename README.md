@@ -354,6 +354,28 @@ To deploy all, use `make deploy`
 To build and deploy all, use `make build-deploy`
 ps: Deploy will push the image to Docker hub.
 
+### GitHub Actions (automated build/test/deploy)
+
+Instead of running `make build`/`make test`/`make deploy` by hand, you can trigger the
+`Build, test and deploy DrupalCI images` workflow from the repo's **Actions** tab, or via:
+
+```bash
+gh workflow run build-test-deploy.yml --ref master \
+  -f build_7=false -f build_8=false -f build_9=false \
+  -f build_10=true -f build_11=true -f build_12=true
+```
+
+Each checked version is built and smoke-tested independently (`fail-fast: false`) — one
+version's test failure doesn't block the others. A version is only pushed to Docker Hub if
+its smoke test passed.
+
+**One-time setup:** the workflow needs two repository secrets under Settings → Secrets and
+variables → Actions:
+
+- `DOCKERHUB_USERNAME` — your Docker Hub username
+- `DOCKERHUB_TOKEN` — a Docker Hub **access token** (Account Settings → Security → New
+  Access Token on hub.docker.com), not your account password
+
 ### Testing
 
 To test all, use `make test`

@@ -46,3 +46,23 @@ jobs:
           json=$(jq -cn --args '$ARGS.positional' "${versions[@]}")
           echo "Selected versions: $json"
           echo "versions=$json" >> "$GITHUB_OUTPUT"
+
+  build-test-deploy:
+    needs: prepare
+    if: needs.prepare.outputs.versions != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{ fromJson(needs.prepare.outputs.versions) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sync templates and build image
+        run: |
+          ./update.sh
+          sh build_${{ matrix.version }}.sh
+
+      - name: Smoke test
+        run: make test-${{ matrix.version }}

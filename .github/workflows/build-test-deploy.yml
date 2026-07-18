@@ -1,0 +1,48 @@
+name: Build, test and deploy DrupalCI images
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_7:
+        description: 'Drupal 7 (frozen/EOL)'
+        type: boolean
+        default: false
+      build_8:
+        description: 'Drupal 8 (frozen/EOL)'
+        type: boolean
+        default: false
+      build_9:
+        description: 'Drupal 9 (frozen/EOL)'
+        type: boolean
+        default: false
+      build_10:
+        description: 'Drupal 10'
+        type: boolean
+        default: true
+      build_11:
+        description: 'Drupal 11'
+        type: boolean
+        default: true
+      build_12:
+        description: 'Drupal 12 (dev-main)'
+        type: boolean
+        default: true
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.set.outputs.versions }}
+    steps:
+      - id: set
+        run: |
+          versions=()
+          [ "${{ inputs.build_7 }}" = "true" ] && versions+=("7")
+          [ "${{ inputs.build_8 }}" = "true" ] && versions+=("8")
+          [ "${{ inputs.build_9 }}" = "true" ] && versions+=("9")
+          [ "${{ inputs.build_10 }}" = "true" ] && versions+=("10")
+          [ "${{ inputs.build_11 }}" = "true" ] && versions+=("11")
+          [ "${{ inputs.build_12 }}" = "true" ] && versions+=("12")
+          json=$(printf '%s\n' "${versions[@]}" | jq -R . | jq -sc .)
+          echo "Selected versions: $json"
+          echo "versions=$json" >> "$GITHUB_OUTPUT"

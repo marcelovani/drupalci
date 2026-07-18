@@ -43,6 +43,6 @@ jobs:
           [ "${{ inputs.build_10 }}" = "true" ] && versions+=("10")
           [ "${{ inputs.build_11 }}" = "true" ] && versions+=("11")
           [ "${{ inputs.build_12 }}" = "true" ] && versions+=("12")
-          json=$(printf '%s\n' "${versions[@]}" | jq -R . | jq -sc .)
+          json=$(jq -cn --args '$ARGS.positional' "${versions[@]}")
           echo "Selected versions: $json"
           echo "versions=$json" >> "$GITHUB_OUTPUT"

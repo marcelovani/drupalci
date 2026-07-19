@@ -26,7 +26,13 @@ RUN apt-get update \
         apt-utils \
         unzip \
         git \
-        sqlite3 > /dev/null
+        sqlite3 \
+        rsyslog > /dev/null
+
+# Forward all syslog messages (this is how Drupal's core syslog module logs
+# watchdog entries) to the container's stdout so they show up in
+# `docker logs`/Docker Desktop's Logs tab instead of only /var/log/syslog.
+RUN echo '*.*  /proc/1/fd/1' > /etc/rsyslog.d/60-docker.conf
 
 # drupal/recommended-project:^12 is not yet on Packagist — dev-main is the 12.x development branch.
 RUN cd /var/www \
@@ -39,6 +45,12 @@ RUN cd /var/www/html \
        drupal/core-dev:dev-main \
        mikey179/vfsstream:^1.0 \
     && sudo -u www-data composer update
+# drush/drush is intentionally NOT required here yet: Drupal 12 dev-main now
+# pulls symfony/yaml ~v8.0, and no drush/drush release (including 13.x-dev)
+# supports Symfony 8 yet, so `composer require drush/drush` fails to resolve.
+# Add it back (see 10/11/apache/Dockerfile) once Drush publishes a
+# Symfony-8-compatible release, and wire up the config_pr-style
+# `drush en syslog -y` install step at the same time.
 
 RUN cd /var/www/html && ln -s web docroot
 

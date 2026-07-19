@@ -22,7 +22,13 @@ RUN apt-get update \
         apt-utils \
         unzip \
         git \
-        sqlite3 > /dev/null
+        sqlite3 \
+        rsyslog > /dev/null
+
+# Forward all syslog messages (this is how Drupal's core syslog module logs
+# watchdog entries) to the container's stdout so they show up in
+# `docker logs`/Docker Desktop's Logs tab instead of only /var/log/syslog.
+RUN echo '*.*  /proc/1/fd/1' > /etc/rsyslog.d/60-docker.conf
 
 RUN cd /var/www \
     && rm -rf html \
@@ -34,6 +40,7 @@ RUN cd /var/www/html \
     && sudo -u www-data composer require --with-all-dependencies --no-update \
        drupal/core-dev:^${DRUPAL_VERSION} \
        mikey179/vfsstream:^1.0 \
+       drush/drush:^12 \
     && sudo -u www-data composer update
 
 RUN cd /var/www/html && ln -s web docroot

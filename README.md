@@ -119,6 +119,24 @@ Stopping the container
 docker stop drupalci
 ```
 
+### Watching Drupal watchdog logs via Docker
+
+Docker Desktop's Logs tab (and `docker logs`) only show the container's stdout/stderr,
+which by default does not include Drupal's watchdog (dblog) entries — those live in the
+database, not in any file wired to that stream.
+
+The `-apache-interactive` images (currently Drupal 10) run a local `rsyslog` daemon and
+forward every syslog message to the container's stdout, so once the `syslog` module is
+enabled, watchdog entries appear directly in `docker logs -f`/Docker Desktop:
+
+```bash
+sudo -u www-data vendor/bin/drush en syslog -y
+```
+
+This is chained automatically after `make install-local` for modules whose Makefile has
+been updated to do so (see `config_pr`'s `install-local` target). `dblog` can stay enabled
+at the same time — Drupal writes to every enabled logger.
+
 ### Forks and branches
 
 To run tests from the a forked branch you can use --version with the branch.

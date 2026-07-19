@@ -20,7 +20,13 @@ RUN set -ex \
         apt-utils \
         unzip \
         git \
-        sqlite3
+        sqlite3 \
+        rsyslog
+
+# Forward all syslog messages (this is how Drupal's core syslog module logs
+# watchdog entries) to the container's stdout so they show up in
+# `docker logs`/Docker Desktop's Logs tab instead of only /var/log/syslog.
+RUN echo '*.*  /proc/1/fd/1' > /etc/rsyslog.d/60-docker.conf
 
 RUN set -ex \
     && curl -L -o /usr/bin/drush https://github.com/drush-ops/drush/releases/download/8.5.0/drush.phar \

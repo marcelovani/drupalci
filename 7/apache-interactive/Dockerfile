@@ -1,4 +1,4 @@
 FROM marcelovani/drupalci:7-apache
 
 ENTRYPOINT []
-CMD ["apache2-foreground"]
+CMD ["sh", "-c", "rsyslogd && exec apache2-foreground"]

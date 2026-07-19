@@ -119,6 +119,24 @@ Stopping the container
 docker stop drupalci
 ```
 
+### Watching Drupal watchdog logs via Docker
+
+Docker Desktop's Logs tab (and `docker logs`) only show the container's stdout/stderr,
+which by default does not include Drupal's watchdog (dblog) entries — those live in the
+database, not in any file wired to that stream.
+
+The `-apache-interactive` images (currently Drupal 10) run a local `rsyslog` daemon and
+forward every syslog message to the container's stdout, so once the `syslog` module is
+enabled, watchdog entries appear directly in `docker logs -f`/Docker Desktop:
+
+```bash
+sudo -u www-data vendor/bin/drush en syslog -y
+```
+
+This is chained automatically after `make install-local` for modules whose Makefile has
+been updated to do so (see `config_pr`'s `install-local` target). `dblog` can stay enabled
+at the same time — Drupal writes to every enabled logger.
+
 ### Forks and branches
 
 To run tests from the a forked branch you can use --version with the branch.
@@ -353,6 +371,28 @@ To build all, upgrading packages, use `make build`
 To deploy all, use `make deploy`
 To build and deploy all, use `make build-deploy`
 ps: Deploy will push the image to Docker hub.
+
+### GitHub Actions (automated build/test/deploy)
+
+Instead of running `make build`/`make test`/`make deploy` by hand, you can trigger the
+`Build, test and deploy DrupalCI images` workflow from the repo's **Actions** tab, or via:
+
+```bash
+gh workflow run build-test-deploy.yml --ref master \
+  -f build_7=false -f build_8=false -f build_9=false \
+  -f build_10=true -f build_11=true -f build_12=true
+```
+
+Each checked version is built and smoke-tested independently (`fail-fast: false`) — one
+version's test failure doesn't block the others. A version is only pushed to Docker Hub if
+its smoke test passed.
+
+**One-time setup:** the workflow needs two repository secrets under Settings → Secrets and
+variables → Actions:
+
+- `DOCKERHUB_USERNAME` — your Docker Hub username
+- `DOCKERHUB_TOKEN` — a Docker Hub **access token** (Account Settings → Security → New
+  Access Token on hub.docker.com), not your account password
 
 ### Testing
 

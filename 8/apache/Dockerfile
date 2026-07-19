@@ -32,7 +32,13 @@ RUN apt-get update \
         apt-utils \
         unzip \
         git \
-        sqlite3 > /dev/null
+        sqlite3 \
+        rsyslog > /dev/null
+
+# Forward all syslog messages (this is how Drupal's core syslog module logs
+# watchdog entries) to the container's stdout so they show up in
+# `docker logs`/Docker Desktop's Logs tab instead of only /var/log/syslog.
+RUN echo '*.*  /proc/1/fd/1' > /etc/rsyslog.d/60-docker.conf
 
 #RUN sudo -u www-data curl -L https://getcomposer.org/installer | php -d allow_url_fopen=on  -- --quiet --install-dir=/usr/bin --filename=composer
 RUN sudo curl -L https://getcomposer.org/composer-2.phar --output ~/composer-2.phar \
@@ -61,6 +67,7 @@ RUN cd /var/www/html \
     && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer require --no-update \
        drupal/core-dev:^${DRUPAL_VERSION} \
        mikey179/vfsstream:^1.0 \
+       drush/drush:^10 \
     && sudo -u www-data COMPOSER_MEMORY_LIMIT=-1 composer update --with-all-dependencies
 
 RUN cd /var/www/html && ln -s web docroot

@@ -35,8 +35,14 @@ test-9:
 test-10:
 	docker run --name drupalcitest --rm marcelovani/drupalci:10-apache --project acquia_vwo --version ^1.0.0
 
+# token 1.x's own suite no longer passes on current core, so it can no longer
+# gate a release of these images: BookTest needs the book module that left core
+# in 11, and FieldTest asserts field-type descriptions core has since reworded.
+# config_token is a smaller subject with a `>=8` core_version_requirement, so
+# the same project installs on both 11 and 12; token_filter is its
+# test_dependency and run-tests.sh refuses to run without it.
 test-11:
-	docker run --name drupalcitest --rm marcelovani/drupalci:11-apache --project token --version ^1.0.0
+	docker run --name drupalcitest --rm marcelovani/drupalci:11-apache --project config_token --version ^1.0.0 --dependencies drupal/token_filter
 
 test-12:
-	docker run --name drupalcitest --rm marcelovani/drupalci:12-apache --project token --version ^1.0.0
+	docker run --name drupalcitest --rm marcelovani/drupalci:12-apache --project config_token --version ^1.0.0 --dependencies drupal/token_filter

@@ -44,5 +44,8 @@ test-10:
 test-11:
 	docker run --name drupalcitest --rm marcelovani/drupalci:11-apache --project config_token --version ^1.0.0 --dependencies drupal/token_filter
 
+# 12 takes config_token's dev branch, not the 1.7 release: Drupal 12 turned
+# missing #[Group] metadata from a deprecation into a MissingGroupException,
+# and only the dev branch carries the attribute on its test classes.
 test-12:
-	docker run --name drupalcitest --rm marcelovani/drupalci:12-apache --project config_token --version ^1.0.0 --dependencies drupal/token_filter
+	docker run --name drupalcitest --rm marcelovani/drupalci:12-apache --project config_token --version dev-1.x --dependencies drupal/token_filter

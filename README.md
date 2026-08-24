@@ -6,6 +6,10 @@
 Runs Drupal webtests and php unit tests using Docker containers.
 This can be used with Git webhooks but its not ready yet.
 
+The images are published to Docker Hub at
+**https://hub.docker.com/r/marcelovani/drupalci** — one tag per core version
+(`7-apache` … `12-apache`, plus an `-apache-interactive` variant of each).
+
 ## Usage examples
 
 The parameters for the runtests.php script are:

@@ -406,46 +406,62 @@ ps: Always test all Drupal versions before deploying.
 
 ### Chrome Driver
 
-You can use Drupal [CI Chrome driver](https://hub.docker.com/r/drupalci/webdriver-chromedriver/tags) to run Functional Javascript tests.
-
-```bash
-docker run --rm --name chromedriver -p 9515:9515 -d drupalci/webdriver-chromedriver:production
-```
+Functional Javascript tests drive a real browser, so they need a WebDriver
+server. Use the [Drupal CI Chrome driver](https://hub.docker.com/r/drupalci/webdriver-chromedriver/tags)
+image.
 
 Alternatively you can use Selenium, see https://github.com/lando/drupal/issues/27
 
+#### Running a module's Functional Javascript tests
+
+The browser has to reach the site, and the test run has to reach the driver.
+The simplest way to arrange that is to start the driver inside the site
+container's network namespace, so both are on the same localhost:
+
+```bash
+# The site container, started as usual, e.g.
+make build-local-11
+
+# The driver, sharing that container's network
+docker run --rm --name chromedriver \
+    --network container:drupalci_${PROJECT_NAME} \
+    -d drupalci/webdriver-chromedriver:production
+```
+
+Then run the tests, telling Drupal where the driver is:
+
+```bash
+docker exec -i \
+    -e MINK_DRIVER_ARGS_WEBDRIVER='["chrome",{"browserName":"chrome","goog:chromeOptions":{"args":["--disable-dev-shm-usage","--disable-gpu","--headless","--no-sandbox","--dns-prefetch-disable"]}},"http://localhost:9515"]' \
+    drupalci_${PROJECT_NAME} bash -c '\
+    sudo -u www-data -E php web/core/scripts/run-tests.sh \
+    --php /usr/local/bin/php \
+    --verbose \
+    --url http://localhost \
+    --sqlite sites/default/files/.ht.sqlite \
+    --types "PHPUnit-FunctionalJavascript" \
+    --directory "modules/contrib/${PROJECT_NAME}"'
+
+docker stop chromedriver
+```
+
+Note the test type name differs by core version: Drupal 10 and 11 use
+`PHPUnit-FunctionalJavascript`, Drupal 12 uses `functional-javascript`.
+
+A module can wrap this in its Makefile so it is a single command. See the
+`start-chromedriver`, `stop-chromedriver` and `test-local-js` targets in
+[captcha_keypad](https://git.drupalcode.org/project/captcha_keypad/-/blob/2.0.x/Makefile)
+for a working example.
+
 #### Chrome Driver - Local Development
 
-Starting the Chrome Driver server locally
+Starting the Chrome Driver server locally, published on port 9515 of the host
+rather than attached to a site container:
 
 ```bash
 npm install
 npm start
 ```
-
-Then test if Chrome Driver is working
-
-```bash
-npm test
-```
-
-Looking at the Chrome Driver logs
-
-docker run --rm --name chromedriver -p 9515:9515 -d drupalci/webdriver-chromedriver:production
-
-````
-
-Alternatively you can use Selenium, see https://github.com/lando/drupal/issues/27
-
-#### Chrome Driver - Local Development
-
-Starting the Chrome Driver server locally
-
-```bash
-npm install
-npm start
-`npm start
-````
 
 Then test if Chrome Driver is working
 
